@@ -20,6 +20,10 @@ const ListMaintenanceElectricalComponent = () => {
         })
     }
 
+    function updateMaintenanceElectrical(id) {
+        navigator(`/edit-maintenance-electrical/${id}`)
+    }
+
     function addNewMaintenanceElectrical() {
         navigator('/add-maintenance-electrical')
     }

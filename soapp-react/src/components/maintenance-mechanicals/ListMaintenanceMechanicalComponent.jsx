@@ -12,6 +12,10 @@ const ListMaintenanceMechanicalComponent = () => {
         getAllMaintenanceMechanicals();
     }, []);
 
+    function updateMaintenanceMechanical(id) {
+        navigator(`/edit-maintenance-mechanical/${id}`)
+    }
+
     function getAllMaintenanceMechanicals() {
         listMaintenanceMechanicals().then((response) => {
             setMaintenanceMechanicals(response.data);
