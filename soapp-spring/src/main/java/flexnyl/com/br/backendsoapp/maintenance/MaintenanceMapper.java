@@ -10,9 +10,7 @@ public class MaintenanceMapper {
         		maintenanceDTO.getMaintenanceRecord(),
         		maintenanceDTO.getMaintenanceReview(),
         		maintenanceDTO.getMaintenanceEmissionDate(),
-        		maintenanceDTO.getUser(),
-        		maintenanceDTO.getMaintenanceElectricals(),
-        		maintenanceDTO.getMaintenanceMechanicals());
+        		maintenanceDTO.getUser());
     }
         public static MaintenanceDTO mapToMaintenanceDTO (Maintenance maintenance){
         return new MaintenanceDTO(
@@ -20,8 +18,6 @@ public class MaintenanceMapper {
         		maintenance.getMaintenanceRecord(),
         		maintenance.getMaintenanceReview(),
         		maintenance.getMaintenanceEmissionDate(),
-        		maintenance.getUser(),
-        		maintenance.getMaintenanceEletricals(),
-        		maintenance.getMaintenanceMechanicals());
+        		maintenance.getUser());
     }
 }

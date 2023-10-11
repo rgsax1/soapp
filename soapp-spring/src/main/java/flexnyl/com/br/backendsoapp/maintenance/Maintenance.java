@@ -2,8 +2,8 @@ package flexnyl.com.br.backendsoapp.maintenance;
 
 import java.util.Calendar;
 
-import flexnyl.com.br.backendsoapp.maintenanceElectrical.MaintenanceElectrical;
-import flexnyl.com.br.backendsoapp.maintenanceMechanical.MaintenanceMechanical;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import flexnyl.com.br.backendsoapp.user.User;
 import jakarta.persistence.*;
 
@@ -11,11 +11,17 @@ import jakarta.persistence.*;
 @Table (name = "maintenance")
 @Entity
 public class Maintenance {
+	
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	private long id;
 	private String maintenanceRecord;
 	private int maintenanceReview;
+	
+	
+	//need to correct this
+	@JsonFormat(pattern = "dd-MM-yyyy", shape = JsonFormat.Shape.STRING, timezone="GMT-3")
+	@Column(name = "maintenance_emission_date")
 	private Calendar maintenanceEmissionDate;
 	
 	@ManyToOne
@@ -23,6 +29,7 @@ public class Maintenance {
 	private User user;
 
 
+	/*
 	@ManyToOne
 	@JoinColumn (name = "maintenance_electrical_id")
 	private MaintenanceElectrical maintenanceEletricals;
@@ -31,14 +38,15 @@ public class Maintenance {
 	@JoinColumn (name = "maintenance_mechanical_id")
 	private MaintenanceMechanical maintenanceMechanicals;
 
-	public Maintenance(long id, String maintenanceRecord, int maintenanceReview, Calendar maintenanceEmissionDate, User user, MaintenanceElectrical maintenanceEletricals, MaintenanceMechanical maintenanceMechanical) {
+*/
+	public Maintenance(long id, String maintenanceRecord, int maintenanceReview, Calendar maintenanceEmissionDate, User user) {
 		this.id = id;
 		this.maintenanceRecord = maintenanceRecord;
 		this.maintenanceReview = maintenanceReview;
 		this.maintenanceEmissionDate = maintenanceEmissionDate;
 		this.user = user;
-		this.maintenanceEletricals = maintenanceEletricals;
-		this.maintenanceMechanicals = maintenanceMechanical;
+	//	this.maintenanceEletricals = maintenanceEletricals;
+	//	this.maintenanceMechanicals = maintenanceMechanical;
 	}
 
 	public Maintenance() {
@@ -80,6 +88,7 @@ public class Maintenance {
 		this.user = user;
 	}
 
+	/*
 	public MaintenanceElectrical getMaintenanceEletricals() {
 		return maintenanceEletricals;
 	}
@@ -95,4 +104,5 @@ public class Maintenance {
 	public void setMaintenanceMechanicals(MaintenanceMechanical maintenanceMechanical) {
 		this.maintenanceMechanicals = maintenanceMechanical;
 	}
+	*/
 }

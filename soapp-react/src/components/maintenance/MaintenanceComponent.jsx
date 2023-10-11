@@ -34,8 +34,6 @@ const MaintenanceComponent = () => {
         fetchUserList();
     }, []);
 
-
-
     useEffect(() => {
         if (id) {
             getMaintenance(id).then((response) => {
@@ -145,16 +143,17 @@ const MaintenanceComponent = () => {
                             <div className="form-group mb-2">
                                 <label className="form-label">Data de emissão:</label>
                                 <input
-                                    type='text'
-                                    placeholder='DD/MM/YYYY'
+                                    type='date'
                                     name='maintenanceEmissionDate'
-                                    value={maintenanceRecord}
+                                    value={maintenanceEmissionDate}
                                     className={`form-control ${errors.maintenanceEmissionDate ? 'is-invalid' : ''}`}
                                     onChange={(e) => setMaintenanceEmissionDate(e.target.value)}
-                                >
-                                </input>
+                                    placeholder='DD/MM/AAAA'
+                                />
                                 {errors.maintenanceRecord && <div className='invalid-feedback'>{errors.maintenanceRecord}</div>}
                             </div>
+
+
 
                             <div className="form-group mb-2">
                                 <label className="form-label">Usuário</label>

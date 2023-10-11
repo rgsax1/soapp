@@ -1,5 +1,6 @@
 package flexnyl.com.br.backendsoapp.user;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table (name = "tb_user")
@@ -7,6 +8,9 @@ public class User {
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	private long id;
+	
+	@NotBlank
+	@Column(unique = true, name = "user_name")
 	private String userName;
 	private String firstName;
 	private String lastName;

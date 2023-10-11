@@ -44,9 +44,7 @@ public class MaintenanceServiceImpl implements MaintenanceService {
     	Maintenance maintenance = maintenanceRepository.findById(id).orElseThrow(
     			() -> new ResourceNotFoundException("Maintenance with id: "+id+ "not found.")
     			);
-    	maintenance.setMaintenanceEletricals(updatedMaintenance.getMaintenanceElectricals());
     	maintenance.setMaintenanceEmissionDate(updatedMaintenance.getMaintenanceEmissionDate());
-    	maintenance.setMaintenanceMechanicals(updatedMaintenance.getMaintenanceMechanicals());
     	maintenance.setMaintenanceRecord(updatedMaintenance.getMaintenanceRecord());
     	maintenance.setMaintenanceReview(updatedMaintenance.getMaintenanceReview());
     	
