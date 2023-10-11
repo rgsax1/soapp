@@ -1,6 +1,13 @@
 # Created by https://www.toptal.com/developers/gitignore/api/java,maven,gradle,intellij,visualstudio,visualstudiocode,eclipse,react,angular
 # Edit at https://www.toptal.com/developers/gitignore?templates=java,maven,gradle,intellij,visualstudio,visualstudiocode,eclipse,react,angular
 
+
+### DotnetCore ###
+# .NET Core build folders
+bin/
+obj/
+
+
 ### Angular ###
 ## Angular ##
 # compiled output
