@@ -9,9 +9,9 @@ const LoginComponent = () => {
                                 <h3 className="text-center mb-4"><i className="fas fa-user"></i> Login</h3>
                                 <form>
                                     <div className="mb-3">
-                                        <label htmlFor="email" className="form-label">Email</label>
-                                        <input type="email" className="form-control" id="email"
-                                               placeholder="Seu email"/>
+                                        <label htmlFor="text" className="form-label">Usuário</label>
+                                        <input type="text" className="form-control" id="user"
+                                               placeholder="Seu usuário"/>
                                     </div>
                                     <div className="mb-3">
                                         <label htmlFor="password" className="form-label">Senha</label>
