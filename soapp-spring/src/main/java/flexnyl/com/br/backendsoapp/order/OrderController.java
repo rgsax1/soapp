@@ -6,17 +6,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import flexnyl.com.br.backendsoapp.order.OrderDTO;
-import flexnyl.com.br.backendsoapp.order.OrderService;
-import lombok.AllArgsConstructor;
-
-@AllArgsConstructor
 @RestController
 @RequestMapping("/api/v1/orders")
 @CrossOrigin(origins = "http://localhost:3000")
 public class OrderController {
 	private OrderService orderService;
 	
+	public OrderController(OrderService orderService) {
+		super();
+		this.orderService = orderService;
+	}
+
 	@PostMapping
 	public ResponseEntity<OrderDTO> createOrder(@RequestBody OrderDTO orderDTO){
 		OrderDTO savedOrder = orderService.createOrder(orderDTO);

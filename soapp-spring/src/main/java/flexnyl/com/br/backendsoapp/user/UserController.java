@@ -6,17 +6,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import flexnyl.com.br.backendsoapp.user.UserDTO;
-import flexnyl.com.br.backendsoapp.user.UserService;
-import lombok.AllArgsConstructor;
-
-@AllArgsConstructor
 @RestController
 @RequestMapping("/api/v1/users")
 @CrossOrigin("*")
 public class UserController {
 	private UserService userService;
 	
+	public UserController(UserService userService) {
+		super();
+		this.userService = userService;
+	}
+
 	@PostMapping
 	public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO userDTO){
 		UserDTO savedUser = userService.createUser(userDTO);

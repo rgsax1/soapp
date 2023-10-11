@@ -6,15 +6,20 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import flexnyl.com.br.backendsoapp.exception.ResourceNotFoundException;
-import lombok.AllArgsConstructor;
 
 
-@AllArgsConstructor
 @Service
 public class MaintenanceServiceImpl implements MaintenanceService {
 
     private MaintenanceRepository maintenanceRepository;
-    @Override
+    
+    
+    public MaintenanceServiceImpl(MaintenanceRepository maintenanceRepository) {
+		super();
+		this.maintenanceRepository = maintenanceRepository;
+	}
+
+	@Override
     public MaintenanceDTO createMaintenance(MaintenanceDTO maintenanceDTO) {
         Maintenance maintenance = MaintenanceMapper.mapToMaintenance(maintenanceDTO);
         Maintenance savedMaintenance = maintenanceRepository.save(maintenance);

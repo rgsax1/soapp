@@ -6,15 +6,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import lombok.AllArgsConstructor;
-
-@AllArgsConstructor
 @RestController
 @RequestMapping("/api/v1/maintenances")
 @CrossOrigin(origins = "http://localhost:3000")
 public class MaintenanceController {
 	private MaintenanceService maintenanceService;
 	
+	public MaintenanceController(MaintenanceService maintenanceService) {
+		super();
+		this.maintenanceService = maintenanceService;
+	}
+
 	@PostMapping
 	public ResponseEntity<MaintenanceDTO> createMaintenance(@RequestBody MaintenanceDTO maintenanceDTO){
 		MaintenanceDTO savedMaintenance = maintenanceService.createMaintenance(maintenanceDTO);

@@ -2,10 +2,6 @@ package flexnyl.com.br.backendsoapp.maintenanceElectrical;
 
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
 @Table (name = "maintenance_electrical")

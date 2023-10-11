@@ -5,20 +5,20 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
-import flexnyl.com.br.backendsoapp.equipment.EquipmentDTO;
-import flexnyl.com.br.backendsoapp.equipment.Equipment;
 import flexnyl.com.br.backendsoapp.exception.ResourceNotFoundException;
-import flexnyl.com.br.backendsoapp.equipment.EquipmentMapper;
-import flexnyl.com.br.backendsoapp.equipment.EquipmentRepository;
-import flexnyl.com.br.backendsoapp.equipment.EquipmentService;
-import lombok.AllArgsConstructor;
 
-@AllArgsConstructor
+
 @Service
 public class EquipmentServiceImpl implements EquipmentService {
 
     private EquipmentRepository equipmentRepository;
-    @Override
+    
+    public EquipmentServiceImpl(EquipmentRepository equipmentRepository) {
+		super();
+		this.equipmentRepository = equipmentRepository;
+	}
+
+	@Override
     public EquipmentDTO createEquipment(EquipmentDTO equipmentDTO) {
         Equipment equipment = EquipmentMapper.mapToEquipment(equipmentDTO);
         Equipment savedEquipment = equipmentRepository.save(equipment);

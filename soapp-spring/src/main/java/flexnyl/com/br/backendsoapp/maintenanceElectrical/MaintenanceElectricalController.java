@@ -6,16 +6,18 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import lombok.AllArgsConstructor;
-
-@AllArgsConstructor
 @RestController
 @RequestMapping("/api/v1/maintenance-electricals")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class MaintenanceElectricalController {
     private MaintenanceElectricalService maintenanceElectricalService;
+    
+    public MaintenanceElectricalController(MaintenanceElectricalService maintenanceElectricalService) {
+		super();
+		this.maintenanceElectricalService = maintenanceElectricalService;
+	}
 
-    @PostMapping
+	@PostMapping
     public ResponseEntity<MaintenanceElectricalDTO> createMaintenanceElectrical(@RequestBody MaintenanceElectricalDTO maintenanceElectricalDTO){
         MaintenanceElectricalDTO savedMaintenanceElectrical = maintenanceElectricalService.createMaintenanceElectrical(maintenanceElectricalDTO);
         return new ResponseEntity<>(savedMaintenanceElectrical, HttpStatus.CREATED);

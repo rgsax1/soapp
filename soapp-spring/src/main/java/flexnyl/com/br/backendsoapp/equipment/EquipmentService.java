@@ -2,7 +2,6 @@ package flexnyl.com.br.backendsoapp.equipment;
 
 import java.util.List;
 
-import flexnyl.com.br.backendsoapp.equipment.EquipmentDTO;
 
 public interface EquipmentService {
 

@@ -1,8 +1,5 @@
 package flexnyl.com.br.backendsoapp.equipment;
 
-import flexnyl.com.br.backendsoapp.equipment.EquipmentDTO;
-import flexnyl.com.br.backendsoapp.equipment.Equipment;
-
 public class EquipmentMapper {
 
 

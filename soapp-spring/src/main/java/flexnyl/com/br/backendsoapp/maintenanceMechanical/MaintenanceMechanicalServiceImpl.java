@@ -2,7 +2,6 @@ package flexnyl.com.br.backendsoapp.maintenanceMechanical;
 
 
 import flexnyl.com.br.backendsoapp.exception.ResourceNotFoundException;
-import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

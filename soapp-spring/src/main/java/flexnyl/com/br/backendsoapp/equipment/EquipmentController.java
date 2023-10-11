@@ -6,15 +6,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import lombok.AllArgsConstructor;
-
 @RestController
 @RequestMapping("/api/v1/equipments")
-@AllArgsConstructor
 @CrossOrigin("*")
 public class EquipmentController {
 	private EquipmentService equipmentService;
 	
+	public EquipmentController(EquipmentService equipmentService) {
+		super();
+		this.equipmentService = equipmentService;
+	}
+
 	@PostMapping
 	public ResponseEntity<EquipmentDTO> createEquipment(@RequestBody EquipmentDTO equipmentDTO){
 		EquipmentDTO savedEquipment = equipmentService.createEquipment(equipmentDTO);
