@@ -5,15 +5,18 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import flexnyl.com.br.backendsoapp.exception.ResourceNotFoundException;
-import lombok.AllArgsConstructor;
 
-@AllArgsConstructor
 @Service
 public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
+    
+    public UserServiceImpl(UserRepository userRepository) {
+		super();
+		this.userRepository = userRepository;
+	}
 
-    @Override
+	@Override
     public UserDTO createUser(UserDTO userDTO) {
         User userAccount = UserMapper.mapToUser(userDTO);
         User savedUser = userRepository.save(userAccount);
