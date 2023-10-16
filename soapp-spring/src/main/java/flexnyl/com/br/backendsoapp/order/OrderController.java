@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/orders")
 @CrossOrigin(origins = "http://localhost:3000")
 public class OrderController {
-	private OrderService orderService;
+	private final OrderService orderService;
 	
 	public OrderController(OrderService orderService) {
 		super();

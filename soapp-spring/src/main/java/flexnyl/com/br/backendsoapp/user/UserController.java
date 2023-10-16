@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/users")
 @CrossOrigin("*")
 public class UserController {
-	private UserService userService;
+	private final UserService userService;
 	
 	public UserController(UserService userService) {
 		super();

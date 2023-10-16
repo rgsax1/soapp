@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/maintenance-mechanicals")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class MaintenanceMechanicalController {
-    private MaintenanceMechanicalService maintenanceMechanicalService;
+    private final MaintenanceMechanicalService maintenanceMechanicalService;
     
     public MaintenanceMechanicalController(MaintenanceMechanicalService maintenanceMechanicalService) {
 		super();

@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 @Service
 public class MaintenanceMechanicalServiceImpl implements MaintenanceMechanicalService {
 
-    private MaintenanceMechanicalRepository maintenanceMechanicalRepository;
+    private final MaintenanceMechanicalRepository maintenanceMechanicalRepository;
 
     public MaintenanceMechanicalServiceImpl(MaintenanceMechanicalRepository maintenanceMechanicalRepository) {
         this.maintenanceMechanicalRepository = maintenanceMechanicalRepository;

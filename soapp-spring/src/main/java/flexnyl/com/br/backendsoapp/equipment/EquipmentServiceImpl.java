@@ -11,7 +11,7 @@ import flexnyl.com.br.backendsoapp.exception.ResourceNotFoundException;
 @Service
 public class EquipmentServiceImpl implements EquipmentService {
 
-    private EquipmentRepository equipmentRepository;
+    private final EquipmentRepository equipmentRepository;
     
     public EquipmentServiceImpl(EquipmentRepository equipmentRepository) {
 		super();

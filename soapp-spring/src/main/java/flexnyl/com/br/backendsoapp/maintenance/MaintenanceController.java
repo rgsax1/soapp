@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/maintenances")
 @CrossOrigin(origins = "http://localhost:3000")
 public class MaintenanceController {
-	private MaintenanceService maintenanceService;
+	private final MaintenanceService maintenanceService;
 	
 	public MaintenanceController(MaintenanceService maintenanceService) {
 		super();

@@ -11,8 +11,8 @@ import flexnyl.com.br.backendsoapp.exception.ResourceNotFoundException;
 @Service
 public class MaintenanceServiceImpl implements MaintenanceService {
 
-    private MaintenanceRepository maintenanceRepository;
-    
+    private final MaintenanceRepository maintenanceRepository;
+
     public MaintenanceServiceImpl(MaintenanceRepository maintenanceRepository) {
 		super();
 		this.maintenanceRepository = maintenanceRepository;

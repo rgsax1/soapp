@@ -9,7 +9,7 @@ import flexnyl.com.br.backendsoapp.exception.ResourceNotFoundException;
 @Service
 public class UserServiceImpl implements UserService {
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
     
     public UserServiceImpl(UserRepository userRepository) {
 		super();

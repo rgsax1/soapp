@@ -1,9 +1,4 @@
 package flexnyl.com.br.backendsoapp.maintenance;
-
-import java.util.Calendar;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 import flexnyl.com.br.backendsoapp.user.User;
 import jakarta.persistence.*;
 
@@ -18,38 +13,25 @@ public class Maintenance {
 	private String maintenanceRecord;
 	private int maintenanceReview;
 	
-	
-	//need to correct this
-	@JsonFormat(pattern = "dd-MM-yyyy", shape = JsonFormat.Shape.STRING, timezone="GMT-3")
+
 	@Column(name = "maintenance_emission_date")
-	private Calendar maintenanceEmissionDate;
+	private String maintenanceEmissionDate;
 	
 	@ManyToOne
 	@JoinColumn (name = "user_id")
 	private User user;
 
 
-	/*
-	@ManyToOne
-	@JoinColumn (name = "maintenance_electrical_id")
-	private MaintenanceElectrical maintenanceEletricals;
-
-	@ManyToOne
-	@JoinColumn (name = "maintenance_mechanical_id")
-	private MaintenanceMechanical maintenanceMechanicals;
-
-*/
-	public Maintenance(long id, String maintenanceRecord, int maintenanceReview, Calendar maintenanceEmissionDate, User user) {
+	public Maintenance(long id, String maintenanceRecord, int maintenanceReview, String maintenanceEmissionDate, User user) {
 		this.id = id;
 		this.maintenanceRecord = maintenanceRecord;
 		this.maintenanceReview = maintenanceReview;
 		this.maintenanceEmissionDate = maintenanceEmissionDate;
 		this.user = user;
-	//	this.maintenanceEletricals = maintenanceEletricals;
-	//	this.maintenanceMechanicals = maintenanceMechanical;
 	}
 
-	public Maintenance() {
+	public Maintenance(){
+
 	}
 
 	public long getId() {
@@ -72,11 +54,11 @@ public class Maintenance {
 		this.maintenanceReview = maintenanceReview;
 	}
 
-	public Calendar getMaintenanceEmissionDate() {
+	public String getMaintenanceEmissionDate() {
 		return maintenanceEmissionDate;
 	}
 
-	public void setMaintenanceEmissionDate(Calendar maintenanceEmissionDate) {
+	public void setMaintenanceEmissionDate(String maintenanceEmissionDate) {
 		this.maintenanceEmissionDate = maintenanceEmissionDate;
 	}
 
@@ -87,22 +69,4 @@ public class Maintenance {
 	public void setUser(User user) {
 		this.user = user;
 	}
-
-	/*
-	public MaintenanceElectrical getMaintenanceEletricals() {
-		return maintenanceEletricals;
-	}
-
-	public void setMaintenanceEletricals(MaintenanceElectrical maintenanceEletricals) {
-		this.maintenanceEletricals = maintenanceEletricals;
-	}
-
-	public MaintenanceMechanical getMaintenanceMechanicals() {
-		return maintenanceMechanicals;
-	}
-
-	public void setMaintenanceMechanicals(MaintenanceMechanical maintenanceMechanical) {
-		this.maintenanceMechanicals = maintenanceMechanical;
-	}
-	*/
 }

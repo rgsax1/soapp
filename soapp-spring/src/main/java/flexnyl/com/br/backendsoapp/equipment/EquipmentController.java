@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/equipments")
 @CrossOrigin("*")
 public class EquipmentController {
-	private EquipmentService equipmentService;
+	private final EquipmentService equipmentService;
 	
 	public EquipmentController(EquipmentService equipmentService) {
 		super();

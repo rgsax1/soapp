@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class MaintenanceElectricalServiceImpl implements MaintenanceElectricalService {
-    private MaintenanceElectricalRepository maintenanceElectricalRepository;
+    private final MaintenanceElectricalRepository maintenanceElectricalRepository;
   
     public MaintenanceElectricalServiceImpl(MaintenanceElectricalRepository maintenanceElectricalRepository) {
 		super();

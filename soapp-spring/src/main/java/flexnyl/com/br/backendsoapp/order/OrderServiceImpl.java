@@ -10,7 +10,7 @@ import flexnyl.com.br.backendsoapp.exception.ResourceNotFoundException;
 @Service
 public class OrderServiceImpl implements OrderService {
 
-    private OrderRepository orderRepository;
+    private final OrderRepository orderRepository;
     
     
     public OrderServiceImpl(OrderRepository orderRepository) {
