@@ -2,6 +2,7 @@ import {useNavigate, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {createMaintenance, getMaintenance, updateMaintenance} from "./MaintenanceService.js";
 import {listUsers} from "../user/UserService.js";
+import {format, parse} from 'date-fns';
 
 const MaintenanceComponent = () => {
 
@@ -9,7 +10,7 @@ const MaintenanceComponent = () => {
     const [maintenanceRecord, setMaintenanceRecord] = useState('')
     const [maintenanceReview, setMaintenanceReview] = useState('')
     const [maintenanceEmissionDate, setMaintenanceEmissionDate] = useState('')
-    const [selectedUser, setSelectedUser] = useState('')
+    const [selectedUser, setSelectedUser] = useState(null)
     const [userList, setUserList] = useState([])
     const navigator = useNavigate();
     const [errors, setErrors] = useState ({
@@ -18,6 +19,20 @@ const MaintenanceComponent = () => {
             maintenanceEmissionDate: '',
             user: '',
     })
+
+    const convertToISO8601 = () => {
+        try {
+            // Ajuste o formato da data do tipo 'yyyy-MM-dd' para 'dd-MM-yyyy'
+            const formattedDate = maintenanceEmissionDate.split('-').reverse().join('-');
+            const parsedDate = parse(formattedDate, 'dd-MM-yyyy', new Date());
+            const iso8601Date = format(parsedDate, "yyyy-MM-dd'T'HH:mm:ss.SSSxxx");
+            return iso8601Date;
+        } catch (error) {
+            console.error('Erro ao converter a data: ', error);
+            return null; // Retorna null em caso de erro na conversão
+        }
+    };
+
 
     useEffect(() => {
         // Função para buscar a lista de usuários do serviço
@@ -46,25 +61,47 @@ const MaintenanceComponent = () => {
         }
     }, [id]);
 
+
+
+
     function saveOrUpdateMaintenance(e){
         e.preventDefault();
+        const iso8601Date = convertToISO8601(); // Converte a data para ISO 8601
+
+        if (!iso8601Date) {
+            //tratamento de erro
+            console.error('Data inválida');
+            return;
+        }
+
+
         if (validateForm()) {
-            const maintenance = {maintenanceRecord, maintenanceReview, maintenanceEmissionDate, user: selectedUser}
+            const maintenance =
+                {
+                    maintenanceRecord,
+                    maintenanceReview,
+                    maintenanceEmissionDate: iso8601Date,
+                    user: selectedUser ? selectedUser.id : null,
+                };
             console.log(maintenance)
             if (id) {
-                updateMaintenance(id, maintenance).then((response) => {
-                    console.log(response.data);
-                    navigator('/maintenances');
-                }).catch(error => {
-                    console.error(error);
-                })
+                updateMaintenance(id, maintenance)
+                    .then((response) => {
+                        console.log(response.data);
+                        navigator('/maintenances');
+                    })
+                    .catch((error) => {
+                        console.error(error);
+                    });
             } else {
-                createMaintenance(maintenance).then((response) => {
-                    console.log(response.data);
-                    navigator('/maintenances')
-                }).catch(error => {
-                    console.error(error);
-                })
+                createMaintenance(maintenance)
+                    .then((response) => {
+                        console.log(response.data);
+                        navigator('/maintenances');
+                    })
+                    .catch((error) => {
+                        console.error(error);
+                    });
             }
         }
     }
@@ -137,37 +174,43 @@ const MaintenanceComponent = () => {
                                     onChange={(e) => setMaintenanceReview(e.target.value)}
                                 >
                                 </input>
-                                {errors.maintenanceRecord && <div className='invalid-feedback'>{errors.maintenanceRecord}</div>}
+                                {errors.maintenanceReview && <div className='invalid-feedback'>{errors.maintenanceReview}</div>}
                             </div>
 
                             <div className="form-group mb-2">
                                 <label className="form-label">Data de emissão:</label>
                                 <input
-                                    type='date'
-                                    name='maintenanceEmissionDate'
+                                    type="date" // Mantenha o campo type="date" para permitir a escolha da data
+                                    name="maintenanceEmissionDate"
                                     value={maintenanceEmissionDate}
                                     className={`form-control ${errors.maintenanceEmissionDate ? 'is-invalid' : ''}`}
                                     onChange={(e) => setMaintenanceEmissionDate(e.target.value)}
-                                    placeholder='DD/MM/AAAA'
                                 />
-                                {errors.maintenanceRecord && <div className='invalid-feedback'>{errors.maintenanceRecord}</div>}
+                                {errors.maintenanceEmissionDate && <div className='invalid-feedback'>{errors.maintenanceEmissionDate}</div>}
                             </div>
+
+
 
 
 
                             <div className="form-group mb-2">
                                 <label className="form-label">Usuário</label>
                                 <select
-                                    value={selectedUser} // Use selectedUser em vez de user
-                                    onChange={(e) => setSelectedUser(e.target.value)}
+                                    value={selectedUser ? selectedUser.id : ''} // Use o ID do usuário como valor
+                                    onChange={(e) => {
+                                        const userId = e.target.value;
+                                        const user = userList.find(user => user.id === userId);
+                                        setSelectedUser(user);
+                                    }}
                                     className="form-control"
                                 >
                                     <option value="">Selecione um usuário</option>
                                     {userList.map((user) => (
-                                        <option key={user.id} value={user.userName}>
-                                            {user.userName} {/* Substitua 'name' pelo campo correto do usuário */}
+                                        <option key={user.id} value={user.id}>
+                                            {user.userName}
                                         </option>
-                                    ))}
+                                    ))}option>
+                                    ))
                                 </select>
                             </div>
 

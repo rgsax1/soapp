@@ -1,21 +1,39 @@
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
-import {deleteMaintenace, listMaintenances} from "./MaintenanceService.js";
+import {deleteMaintenance, listMaintenances} from "./MaintenanceService.js";
+import {listUsers} from "../user/UserService.js";
+import {format} from "date-fns";
+
+
+
+
 
 const ListMaintenanceComponent = () => {
     const [maintenances, setMaintenances] = useState([]);
+    const [users, setUsers] = useState([]);
     const navigator = useNavigate();
 
     useEffect(() => {
         getAllMaintenances();
     }, []);
 
-    function getAllMaintenances() {
-        listMaintenances().then((response) => {
-            setMaintenances(response.data);
-        }).catch(error => {
-            console.error(error);
-        })
+    async function getAllMaintenances() {
+        try {
+            const maintenanceResponse = await listMaintenances();
+            setMaintenances(maintenanceResponse.data);
+
+            // Agora, após buscar as manutenções, busque a lista de usuários
+            const userResponse = await listUsers();
+            setUsers(userResponse.data);
+        } catch (error) {
+            console.error("Erro ao buscar as manutenções ou a lista de usuários:", error);
+        }
+    }
+
+    function formatDate(isoDate) {
+        if (!isoDate) return ''; // Verifique se a data não está vazia
+        const date = new Date(isoDate);
+        return format(date, 'dd/MM/yyyy'); // Formate a data como 'dd-MM-yyyy'
     }
 
     function addNewMaintenance() {
@@ -28,12 +46,24 @@ const ListMaintenanceComponent = () => {
 
     function removeMaintenance(id) {
         console.log(id);
-        deleteMaintenace(id).then((response) =>{
+        deleteMaintenance(id).then((response) =>{
             getAllMaintenances();
         }).catch(error => {
             console.error(error);
         })
     }
+
+    {/*
+{users.map(user => <tr key={user.id}>
+    <td>{user.id}</td>
+    <td>{user.userName}</td>
+ */}
+
+    function getUserById(userId) {
+        const user = users.find((user) => user.id === userId);
+        return user ? user.userName : "Usuário não encontrado";
+    }
+
 
 
 
@@ -55,12 +85,27 @@ const ListMaintenanceComponent = () => {
                     </thead>
                     <tbody>
                     {
-                        maintenances.map(maintenance =>
-                        <tr key={maintenance.id}>
-
-                        </tr>
-                        )
+                        maintenances.map((maintenance) => (
+                            <tr key={maintenance.id}>
+                                <td>{maintenance.id}</td>
+                                <td>{maintenance.maintenanceRecord}</td>
+                                <td>{maintenance.maintenanceReview}</td>
+                                <td>{formatDate(maintenance.maintenanceEmissionDate)}</td>
+                                <td>{getUserById(maintenance.user)}</td>
+                                <td>
+                                    <button className="btn btn-info"
+                                            onClick={() => updateMaintenance(maintenance.id)}>
+                                        Editar
+                                    </button>
+                                    <button className="btn btn-danger"
+                                            onClick={() => removeMaintenance(maintenance.id)} style={{marginLeft: '10px'}}>
+                                        Excluir
+                                    </button>
+                                </td>
+                            </tr>
+                        ))
                     }
+
                     </tbody>
                 </table>
             </div>
