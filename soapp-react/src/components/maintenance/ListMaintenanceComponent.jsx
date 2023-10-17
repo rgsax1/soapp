@@ -74,49 +74,72 @@ const ListMaintenanceComponent = () => {
 
 
     return (
-        <>
-            <div className="container">
-                <h2 className="text-center">Fichas de Manutenções</h2>
-                <button className="btn btn-primary mb-2" onClick={addNewMaintenance}>Criar nova ficha</button>
-                <table className="table table-striped table-bordered">
-                    <thead>
-                    <tr>
-                        <td>Id:</td>
-                        <td>Registro:</td>
-                        <td>Revisão:</td>
-                        <td>Data de criação:</td>
-                        <td>Aprovado por:</td>
-                        <td>Ações:</td>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {
-                        maintenances.map((maintenance) => (
-                            <tr key={maintenance.id}>
-                                <td>{maintenance.id}</td>
-                                <td>{maintenance.maintenanceRecord}</td>
-                                <td>{maintenance.maintenanceReview}</td>
-                                <td>{formatDate(maintenance.maintenanceEmissionDate)}</td>
-                                <td>{mapUserIdToUserName(maintenance.userId, users)}</td>
-                                <td>
-                                    <button className="btn btn-info"
-                                            onClick={() => updateMaintenance(maintenance.id)}>
-                                        Editar
-                                    </button>
-                                    <button className="btn btn-danger"
-                                            onClick={() => removeMaintenance(maintenance.id)} style={{marginLeft: '10px'}}>
-                                        Excluir
-                                    </button>
-                                </td>
-                            </tr>
-                        ))
-                    }
+        <div className="container">
+            <h2 className="text-center">Fichas de Manutenções</h2>
+            <button className="btn btn-primary mb-2" onClick={addNewMaintenance}>Criar nova ficha</button>
+            <div className="maintenance-table">
+                {
+                    maintenances.map((maintenance) => (
+                        <div className="maintenance-row" key={maintenance.id}>
+                            <div className="maintenance-column">
+                                <strong>Id:</strong> {maintenance.id}
+                            </div>
+                            <div className="maintenance-column">
+                                <strong>Registro:</strong> {maintenance.maintenanceRecord}
+                            </div>
+                            <div className="maintenance-column">
+                                <strong>Revisão:</strong> {maintenance.maintenanceReview}
+                            </div>
+                            <div className="maintenance-column">
+                                <strong>Data de criação:</strong> {formatDate(maintenance.maintenanceEmissionDate)}
+                            </div>
+                            <div className="maintenance-column">
+                                <strong>Aprovado por:</strong> {mapUserIdToUserName(maintenance.userId, users)}
+                            </div>
 
-                    </tbody>
-                </table>
+                            <div className="electrical-checks">
+                                <table className="col-md-6">
+                                    <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Nome da Verificação Elétrica</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {/* Mapeie os dados das verificações elétricas aqui */}
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div className="electrical-checks">
+                                <table className="col-md-6">
+                                    <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Nome da Verificação Mecânica</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {/* Mapeie os dados das verificações elétricas aqui */}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div className="maintenance-actions">
+                                <button className="btn btn-info" onClick={() => updateMaintenance(maintenance.id)}>
+                                    Editar
+                                </button>
+                                <button className="btn btn-danger" onClick={() => removeMaintenance(maintenance.id)}style={{marginLeft: '10px'}}>
+                                    Excluir
+                                </button>
+                            </div>
+
+                        </div>
+                    ))
+                }
             </div>
-        </>
-    )
+        </div>
+    );
+
 }
 
 export default ListMaintenanceComponent;
