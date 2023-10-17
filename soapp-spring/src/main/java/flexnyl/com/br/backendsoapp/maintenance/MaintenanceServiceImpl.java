@@ -27,22 +27,17 @@ public class MaintenanceServiceImpl implements MaintenanceService {
 
 		Maintenance maintenance = MaintenanceMapper.mapToMaintenance(maintenanceDTO);
 
-		Optional<User> userOptional = userRepository.findByUserName(maintenanceDTO.getUserNameFk());
+		User user = userRepository.findById(maintenanceDTO.getUserId())
+				.orElseThrow(()-> new ResourceNotFoundException("User with id "+ maintenanceDTO.getUserId() + "not found."));
 
-		if (userOptional.isPresent()) {
-			User user = userOptional.get();
+		maintenance.setUser(user);
 
-			maintenance.setUser(user);
+		Maintenance savedMaintenance = maintenanceRepository.save(maintenance);
 
-			Maintenance savedMaintenance = maintenanceRepository.save(maintenance);
+		return MaintenanceMapper.mapToMaintenanceDTO(savedMaintenance);
 
-			MaintenanceDTO mappedMaintenanceDTO = MaintenanceMapper.mapToMaintenanceDTO(savedMaintenance);
-			mappedMaintenanceDTO.setUserNameFk(user.getUserName());
 
-			return mappedMaintenanceDTO;
-		} else {
-			throw new ResourceNotFoundException("User is not exists with userNameFk: " + maintenanceDTO.getUserNameFk());
-		}
+
 	}
 
 

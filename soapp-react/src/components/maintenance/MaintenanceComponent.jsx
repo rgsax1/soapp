@@ -10,15 +10,20 @@ const MaintenanceComponent = () => {
     const [maintenanceRecord, setMaintenanceRecord] = useState('')
     const [maintenanceReview, setMaintenanceReview] = useState('')
     const [maintenanceEmissionDate, setMaintenanceEmissionDate] = useState('')
-    const [selectedUser, setSelectedUser] = useState(null)
-    const [userList, setUserList] = useState([])
+
+    const [userId, setUserId] = useState('')
+    const [users, setUsers] = useState([])
+
     const navigator = useNavigate();
+
     const [errors, setErrors] = useState ({
             maintenanceRecord: '',
             maintenanceReview: '',
             maintenanceEmissionDate: '',
-            user: '',
+            user: ''
     })
+
+
 
     const convertToISO8601 = () => {
         try {
@@ -34,20 +39,14 @@ const MaintenanceComponent = () => {
     };
 
 
-    useEffect(() => {
-        // Função para buscar a lista de usuários do serviço
-        async function fetchUserList() {
-            try {
-                const response = await listUsers();
-                setUserList(response.data); // Define a lista de usuários no estado
-            } catch (error) {
-                console.error("Erro ao buscar a lista de usuários:", error);
-            }
-        }
 
-        // Chame a função assíncrona dentro do useEffect
-        fetchUserList();
-    }, []);
+    useEffect(() => {
+        listUsers().then((response) => {
+            setUsers(response.data);
+        }).catch(error => {
+            console.error(error);
+        })
+    }, [])
 
     useEffect(() => {
         if (id) {
@@ -55,6 +54,7 @@ const MaintenanceComponent = () => {
                 setMaintenanceRecord(response.data.maintenanceRecord);
                 setMaintenanceReview(response.data.maintenanceReview);
                 setMaintenanceEmissionDate(response.data.maintenanceEmissionDate);
+                setUserId(response.data.userId);
             }).catch(error => {
                 console.error(error);
             })
@@ -81,7 +81,7 @@ const MaintenanceComponent = () => {
                     maintenanceRecord,
                     maintenanceReview,
                     maintenanceEmissionDate: iso8601Date,
-                    user: selectedUser ? selectedUser.id : null,
+                    userId
                 };
             console.log(maintenance)
             if (id) {
@@ -127,6 +127,13 @@ const MaintenanceComponent = () => {
             errorsCopy.maintenanceEmissionDate = '';
         } else {
             errorsCopy.maintenanceEmissionDate = 'Digite a data'
+        }
+
+        if (userId){
+            errorsCopy.user = '';
+        } else {
+            errorsCopy.user = 'Selecione um usuário'
+            valid = false
         }
 
         setErrors(errorsCopy);
@@ -192,32 +199,24 @@ const MaintenanceComponent = () => {
 
 
 
-
                             <div className="form-group mb-2">
-                                <label className="form-label">Usuário</label>
+                                <label className='form-label'>Selecione o usuário:</label>
                                 <select
-                                    value={selectedUser ? selectedUser.id : ''} // Use o ID do usuário como valor
-                                    onChange={(e) => {
-                                        const userId = e.target.value;
-                                        const user = userList.find(user => user.id === userId);
-                                        setSelectedUser(user);
-                                    }}
-                                    className="form-control"
+                                    className={`form-control ${errors.user ? 'is-invalid' : ''}`}
+                                    value={userId}
+                                    onChange={(e) => setUserId(e.target.value)}
                                 >
-                                    <option value="">Selecione um usuário</option>
-                                    {userList.map((user) => (
-                                        <option key={user.id} value={user.id}>
-                                            {user.userName}
-                                        </option>
-                                    ))}option>
-                                    ))
+                                    <option value="Selecione o usuário">Selecione o usuário</option>
+                                    {
+                                        users.map(user =>
+                                        <option key={user.id} value={user.id}>{user.userName}</option>
+                                        )
+                                    }
                                 </select>
+                                {errors.user && <div className='invalid-feedback'>{errors.user}</div>}
                             </div>
+                            <button className="btn btn-success mb-2" onClick={saveOrUpdateMaintenance}>Enviar</button>
 
-
-
-
-                            <button className="btn btn-success mb-2" onClick={(e) => saveOrUpdateMaintenance(e)}>Enviar</button>
                         </form>
                     </div>
                 </div>

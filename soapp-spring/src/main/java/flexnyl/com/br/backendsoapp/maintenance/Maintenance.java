@@ -18,11 +18,15 @@ public class Maintenance {
 	private String maintenanceEmissionDate;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn (name = "user_name_fk")
+	@JoinColumn (name = "user_id")
 	private User user;
 
 
 	public Maintenance(long id, String maintenanceRecord, int maintenanceReview, String maintenanceEmissionDate, User user) {
+		if (user == null) {
+			throw new IllegalArgumentException("User is required for Maintenance.");
+		}
+
 		this.id = id;
 		this.maintenanceRecord = maintenanceRecord;
 		this.maintenanceReview = maintenanceReview;
@@ -36,6 +40,10 @@ public class Maintenance {
 
 	public long getId() {
 		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public String getMaintenanceRecord() {
@@ -67,6 +75,9 @@ public class Maintenance {
 	}
 
 	public void setUser(User user) {
+		if (user == null) {
+			throw new IllegalArgumentException("User is required for Maintenance.");
+		}
 		this.user = user;
 	}
 }
