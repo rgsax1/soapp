@@ -38,7 +38,7 @@ const ListMaintenanceComponent = () => {
     function formatDate(isoDate) {
         if (!isoDate) return ''; // Verifique se a data não está vazia
         const date = new Date(isoDate);
-        return format(date, 'dd/MM/yyyy'); // Formate a data como 'dd-MM-yyyy'
+        return format(date, 'dd/MM/yyyy');
     }
 
     function addNewMaintenance() {
@@ -52,24 +52,21 @@ const ListMaintenanceComponent = () => {
     function removeMaintenance(id) {
         console.log(id);
         deleteMaintenance(id)
-            .then((response) => {
-                // Aqui a manutenção foi excluída com sucesso, você pode fazer algo se necessário
+            .then( () => {
                 console.log("Manutenção excluída com sucesso");
-                return getAllMaintenances(); // Retorna a chamada para que você possa lidar com a resposta em outro lugar
+                return getAllMaintenances();
             })
             .then((response) => {
-                // Aqui, você lida com a resposta da getAllMaintenances após a exclusão
                 console.log("Lista de manutenções atualizada após exclusão:", response);
-
-                // Você pode fazer algo mais aqui, como atualizar a interface do usuário
             })
             .catch((error) => {
-                // Aqui ocorreu um erro ao excluir a manutenção
                 console.error("Erro ao excluir a manutenção:", error);
-
-                // Se desejar, você pode exibir uma mensagem de erro para o usuário
-                // ou lidar com o erro de outra forma
             });
+    }
+
+    function mapUserIdToUserName(userId, users) {
+        const user = users.find(user => user.id === userId);
+        return user ? user.userName : "Usuário não encontrado";
     }
 
 
@@ -100,7 +97,7 @@ const ListMaintenanceComponent = () => {
                                 <td>{maintenance.maintenanceRecord}</td>
                                 <td>{maintenance.maintenanceReview}</td>
                                 <td>{formatDate(maintenance.maintenanceEmissionDate)}</td>
-                                <td>{users.find((user) => user.id === maintenance.userId)?.name}</td>
+                                <td>{mapUserIdToUserName(maintenance.userId, users)}</td>
                                 <td>
                                     <button className="btn btn-info"
                                             onClick={() => updateMaintenance(maintenance.id)}>

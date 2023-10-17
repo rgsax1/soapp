@@ -52,7 +52,8 @@ const ListUserComponents = () => {
             </tr>
             </thead>
             <tbody>
-            {users.map(user => <tr key={user.id}>
+            {users.map(user =>
+                <tr key={user.id}>
                 <td>{user.id}</td>
                 <td>{user.userName}</td>
                 <td>{user.firstName}</td>
