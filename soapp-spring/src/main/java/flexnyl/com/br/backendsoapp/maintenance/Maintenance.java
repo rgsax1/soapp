@@ -17,8 +17,8 @@ public class Maintenance {
 	@Column(name = "maintenance_emission_date")
 	private String maintenanceEmissionDate;
 	
-	@ManyToOne
-	@JoinColumn (name = "user_id")
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn (name = "user_name_fk")
 	private User user;
 
 

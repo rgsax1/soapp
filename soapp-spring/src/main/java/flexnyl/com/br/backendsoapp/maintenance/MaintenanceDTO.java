@@ -8,14 +8,15 @@ public class MaintenanceDTO {
 	private String maintenanceRecord;
 	private int maintenanceReview;
 	private String maintenanceEmissionDate;
-	private User user;
+	private String userNameFk;
 
-	public MaintenanceDTO(long id, String maintenanceRecord, int maintenanceReview, String maintenanceEmissionDate, User user) {
+
+	public MaintenanceDTO(long id, String maintenanceRecord, int maintenanceReview, String maintenanceEmissionDate, String userNameFk) {
 		this.id = id;
 		this.maintenanceRecord = maintenanceRecord;
 		this.maintenanceReview = maintenanceReview;
 		this.maintenanceEmissionDate = maintenanceEmissionDate;
-		this.user = user;
+		this.userNameFk = userNameFk;
 	}
 
 	public MaintenanceDTO() {
@@ -53,11 +54,11 @@ public class MaintenanceDTO {
 		this.maintenanceEmissionDate = maintenanceEmissionDate;
 	}
 
-	public User getUser() {
-		return user;
+	public String getUserNameFk() {
+		return userNameFk;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setUserNameFk(String userNameFk) {
+		this.userNameFk = userNameFk;
 	}
 }

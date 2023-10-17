@@ -1,8 +1,11 @@
 package flexnyl.com.br.backendsoapp.maintenance;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
+import flexnyl.com.br.backendsoapp.user.User;
+import flexnyl.com.br.backendsoapp.user.UserRepository;
 import org.springframework.stereotype.Service;
 
 import flexnyl.com.br.backendsoapp.exception.ResourceNotFoundException;
@@ -12,20 +15,38 @@ import flexnyl.com.br.backendsoapp.exception.ResourceNotFoundException;
 public class MaintenanceServiceImpl implements MaintenanceService {
 
     private final MaintenanceRepository maintenanceRepository;
+	private final UserRepository userRepository;
 
-    public MaintenanceServiceImpl(MaintenanceRepository maintenanceRepository) {
-		super();
+	public MaintenanceServiceImpl(MaintenanceRepository maintenanceRepository, UserRepository userRepository) {
 		this.maintenanceRepository = maintenanceRepository;
+		this.userRepository = userRepository;
 	}
 
 	@Override
-    public MaintenanceDTO createMaintenance(MaintenanceDTO maintenanceDTO) {
-        Maintenance maintenance = MaintenanceMapper.mapToMaintenance(maintenanceDTO);
-        Maintenance savedMaintenance = maintenanceRepository.save(maintenance);
-        return MaintenanceMapper.mapToMaintenanceDTO(savedMaintenance);
-    }
+	public MaintenanceDTO createMaintenance(MaintenanceDTO maintenanceDTO) {
 
-    @Override
+		Maintenance maintenance = MaintenanceMapper.mapToMaintenance(maintenanceDTO);
+
+		Optional<User> userOptional = userRepository.findByUserName(maintenanceDTO.getUserNameFk());
+
+		if (userOptional.isPresent()) {
+			User user = userOptional.get();
+
+			maintenance.setUser(user);
+
+			Maintenance savedMaintenance = maintenanceRepository.save(maintenance);
+
+			MaintenanceDTO mappedMaintenanceDTO = MaintenanceMapper.mapToMaintenanceDTO(savedMaintenance);
+			mappedMaintenanceDTO.setUserNameFk(user.getUserName());
+
+			return mappedMaintenanceDTO;
+		} else {
+			throw new ResourceNotFoundException("User is not exists with userNameFk: " + maintenanceDTO.getUserNameFk());
+		}
+	}
+
+
+	@Override
     public MaintenanceDTO getMaintenanceById(long id) {
     	Maintenance maintenance = maintenanceRepository.findById(id)
     			.orElseThrow(()-> new ResourceNotFoundException("Maintenance with id: "+id+ "not found."));
@@ -58,5 +79,5 @@ public class MaintenanceServiceImpl implements MaintenanceService {
     			() -> new ResourceNotFoundException("Maintenance with id: "+id+ "not found."));
     	maintenanceRepository.deleteById(id);
     }
-    
+
 }
