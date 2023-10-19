@@ -1,26 +1,29 @@
 package flexnyl.com.br.backendsoapp.maintenance;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import flexnyl.com.br.backendsoapp.user.User;
 import flexnyl.com.br.backendsoapp.user.UserRepository;
+import flexnyl.com.br.backendsoapp.maintenanceElectrical.MaintenanceElectrical;
+import flexnyl.com.br.backendsoapp.maintenanceElectrical.MaintenanceElectricalRepository;
+import flexnyl.com.br.backendsoapp.maintenanceMechanical.MaintenanceMechanical;
+import flexnyl.com.br.backendsoapp.maintenanceMechanical.MaintenanceMechanicalRepository;
+import lombok.AllArgsConstructor;
+
 import org.springframework.stereotype.Service;
 
 import flexnyl.com.br.backendsoapp.exception.ResourceNotFoundException;
 
 
+@AllArgsConstructor
 @Service
 public class MaintenanceServiceImpl implements MaintenanceService {
 
     private final MaintenanceRepository maintenanceRepository;
 	private final UserRepository userRepository;
-
-	public MaintenanceServiceImpl(MaintenanceRepository maintenanceRepository, UserRepository userRepository) {
-		this.maintenanceRepository = maintenanceRepository;
-		this.userRepository = userRepository;
-	}
+	private final MaintenanceElectricalRepository maintenanceElectricalRepository;
+	private final MaintenanceMechanicalRepository maintenanceMechanicalRepository;
 
 	@Override
 	public MaintenanceDTO createMaintenance(MaintenanceDTO maintenanceDTO) {
@@ -31,6 +34,16 @@ public class MaintenanceServiceImpl implements MaintenanceService {
 				.orElseThrow(()-> new ResourceNotFoundException("User with id "+ maintenanceDTO.getUserId() + "not found."));
 
 		maintenance.setUser(user);
+		
+		MaintenanceElectrical maintenanceElectrical = maintenanceElectricalRepository.findById(maintenanceDTO.getMaintenanceElectricalId())
+				.orElseThrow(()-> new ResourceNotFoundException("Maintenance Electrical with id: "+ maintenanceDTO.getMaintenanceElectricalId() + "not found."));
+
+		maintenance.setMaintenanceElectrical(maintenanceElectrical);
+		
+		MaintenanceMechanical maintenanceMechanical = maintenanceMechanicalRepository.findById(maintenanceDTO.getMaintenanceMechanicalId())
+				.orElseThrow(()-> new ResourceNotFoundException("Maintenance Mechanical with id: "+ maintenanceDTO.getMaintenanceMechanicalId() + "not found."));
+
+		maintenance.setMaintenanceMechanical(maintenanceMechanical);
 
 		Maintenance savedMaintenance = maintenanceRepository.save(maintenance);
 

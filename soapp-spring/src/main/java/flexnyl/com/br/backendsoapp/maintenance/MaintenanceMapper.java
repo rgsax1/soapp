@@ -18,7 +18,9 @@ public class MaintenanceMapper {
                 maintenance.getMaintenanceRecord(),
                 maintenance.getMaintenanceReview(),
                 maintenance.getMaintenanceEmissionDate(),
-                maintenance.getUser().getId()
+                maintenance.getUser().getId(),
+                maintenance.getMaintenanceElectrical().getId(),
+                maintenance.getMaintenanceMechanical().getId()
         );
     }
 }

@@ -1,63 +1,23 @@
 package flexnyl.com.br.backendsoapp.maintenance;
 
-import flexnyl.com.br.backendsoapp.user.User;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 public class MaintenanceDTO {
     private long id;
 	private String maintenanceRecord;
 	private int maintenanceReview;
 	private String maintenanceEmissionDate;
 	private long userId;
+	private long maintenanceMechanicalId;
+	private long maintenanceElectricalId;
+	
 
-	public MaintenanceDTO(long id, String maintenanceRecord, int maintenanceReview, String maintenanceEmissionDate, long userId) {
-		this.id = id;
-		this.maintenanceRecord = maintenanceRecord;
-		this.maintenanceReview = maintenanceReview;
-		this.maintenanceEmissionDate = maintenanceEmissionDate;
-		this.userId = userId;
-	}
 
-	public MaintenanceDTO() {
-	}
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	public String getMaintenanceRecord() {
-		return maintenanceRecord;
-	}
-
-	public void setMaintenanceRecord(String maintenanceRecord) {
-		this.maintenanceRecord = maintenanceRecord;
-	}
-
-	public int getMaintenanceReview() {
-		return maintenanceReview;
-	}
-
-	public void setMaintenanceReview(int maintenanceReview) {
-		this.maintenanceReview = maintenanceReview;
-	}
-
-	public String getMaintenanceEmissionDate() {
-		return maintenanceEmissionDate;
-	}
-
-	public void setMaintenanceEmissionDate(String maintenanceEmissionDate) {
-		this.maintenanceEmissionDate = maintenanceEmissionDate;
-	}
-
-	public long getUserId() {
-		return userId;
-	}
-
-	public void setUserId(long userId) {
-		this.userId = userId;
-	}
 }

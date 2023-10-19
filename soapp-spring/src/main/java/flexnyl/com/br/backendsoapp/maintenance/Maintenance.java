@@ -1,10 +1,20 @@
 package flexnyl.com.br.backendsoapp.maintenance;
+import flexnyl.com.br.backendsoapp.maintenanceElectrical.MaintenanceElectrical;
+import flexnyl.com.br.backendsoapp.maintenanceMechanical.MaintenanceMechanical;
 import flexnyl.com.br.backendsoapp.user.User;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 
 @Table (name = "maintenance")
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 public class Maintenance {
 	
 	@Id
@@ -20,64 +30,13 @@ public class Maintenance {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn (name = "user_id")
 	private User user;
-
-
-	public Maintenance(long id, String maintenanceRecord, int maintenanceReview, String maintenanceEmissionDate, User user) {
-		if (user == null) {
-			throw new IllegalArgumentException("User is required for Maintenance.");
-		}
-
-		this.id = id;
-		this.maintenanceRecord = maintenanceRecord;
-		this.maintenanceReview = maintenanceReview;
-		this.maintenanceEmissionDate = maintenanceEmissionDate;
-		this.user = user;
-	}
-
-	public Maintenance(){
-
-	}
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	public String getMaintenanceRecord() {
-		return maintenanceRecord;
-	}
-
-	public void setMaintenanceRecord(String maintenanceRecord) {
-		this.maintenanceRecord = maintenanceRecord;
-	}
-
-	public int getMaintenanceReview() {
-		return maintenanceReview;
-	}
-
-	public void setMaintenanceReview(int maintenanceReview) {
-		this.maintenanceReview = maintenanceReview;
-	}
-
-	public String getMaintenanceEmissionDate() {
-		return maintenanceEmissionDate;
-	}
-
-	public void setMaintenanceEmissionDate(String maintenanceEmissionDate) {
-		this.maintenanceEmissionDate = maintenanceEmissionDate;
-	}
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		if (user == null) {
-			throw new IllegalArgumentException("User is required for Maintenance.");
-		}
-		this.user = user;
-	}
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn (name = "equipment_electrical_id")
+	private MaintenanceElectrical maintenanceElectrical;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn (name = "equipment_mechanical_id")
+	private MaintenanceMechanical maintenanceMechanical;
+	
 }
