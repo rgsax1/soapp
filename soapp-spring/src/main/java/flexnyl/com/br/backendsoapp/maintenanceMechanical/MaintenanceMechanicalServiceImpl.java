@@ -2,6 +2,8 @@ package flexnyl.com.br.backendsoapp.maintenanceMechanical;
 
 
 import flexnyl.com.br.backendsoapp.exception.ResourceNotFoundException;
+import lombok.AllArgsConstructor;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,13 +11,10 @@ import java.util.stream.Collectors;
 
 
 @Service
+@AllArgsConstructor
 public class MaintenanceMechanicalServiceImpl implements MaintenanceMechanicalService {
 
     private final MaintenanceMechanicalRepository maintenanceMechanicalRepository;
-
-    public MaintenanceMechanicalServiceImpl(MaintenanceMechanicalRepository maintenanceMechanicalRepository) {
-        this.maintenanceMechanicalRepository = maintenanceMechanicalRepository;
-    }
 
     @Override
     public MaintenanceMechanicalDTO createMaintenanceMechanical(MaintenanceMechanicalDTO maintenanceMechanicalDTO) {

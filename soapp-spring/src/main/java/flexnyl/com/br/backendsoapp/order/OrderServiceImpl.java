@@ -6,17 +6,13 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import flexnyl.com.br.backendsoapp.exception.ResourceNotFoundException;
+import lombok.AllArgsConstructor;
 
 @Service
+@AllArgsConstructor
 public class OrderServiceImpl implements OrderService {
 
     private final OrderRepository orderRepository;
-    
-    
-    public OrderServiceImpl(OrderRepository orderRepository) {
-		super();
-		this.orderRepository = orderRepository;
-	}
 
 	@Override
     public OrderDTO createOrder(OrderDTO orderDTO) {

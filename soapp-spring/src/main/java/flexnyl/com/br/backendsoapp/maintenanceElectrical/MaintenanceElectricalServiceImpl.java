@@ -2,20 +2,18 @@ package flexnyl.com.br.backendsoapp.maintenanceElectrical;
 
 
 import flexnyl.com.br.backendsoapp.exception.ResourceNotFoundException;
+import lombok.AllArgsConstructor;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@AllArgsConstructor
 public class MaintenanceElectricalServiceImpl implements MaintenanceElectricalService {
     private final MaintenanceElectricalRepository maintenanceElectricalRepository;
   
-    public MaintenanceElectricalServiceImpl(MaintenanceElectricalRepository maintenanceElectricalRepository) {
-		super();
-		this.maintenanceElectricalRepository = maintenanceElectricalRepository;
-	}
-
     @Override
     public MaintenanceElectricalDTO createMaintenanceElectrical(MaintenanceElectricalDTO maintenanceElectricalDTO) {
         MaintenanceElectrical maintenanceElectrical = MaintenanceElectricalMapper.mapToMaintenanceElectrical(maintenanceElectricalDTO);

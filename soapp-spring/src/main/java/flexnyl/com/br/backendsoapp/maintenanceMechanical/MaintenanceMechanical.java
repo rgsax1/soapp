@@ -1,10 +1,18 @@
 package flexnyl.com.br.backendsoapp.maintenanceMechanical;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 
 @Entity
 @Table(name = "maintenance_mechanical")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class MaintenanceMechanical {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -12,23 +20,5 @@ public class MaintenanceMechanical {
 
     private String type;
 
-    public MaintenanceMechanical(long id, String type) {
-        this.id = id;
-        this.type = type;
-    }
-
-    public MaintenanceMechanical() {
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
+   
 }

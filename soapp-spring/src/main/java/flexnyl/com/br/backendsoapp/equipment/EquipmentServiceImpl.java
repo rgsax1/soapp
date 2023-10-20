@@ -6,17 +6,15 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import flexnyl.com.br.backendsoapp.exception.ResourceNotFoundException;
+import lombok.AllArgsConstructor;
 
 
 @Service
+@AllArgsConstructor
 public class EquipmentServiceImpl implements EquipmentService {
 
     private final EquipmentRepository equipmentRepository;
-    
-    public EquipmentServiceImpl(EquipmentRepository equipmentRepository) {
-		super();
-		this.equipmentRepository = equipmentRepository;
-	}
+   
 
 	@Override
     public EquipmentDTO createEquipment(EquipmentDTO equipmentDTO) {
