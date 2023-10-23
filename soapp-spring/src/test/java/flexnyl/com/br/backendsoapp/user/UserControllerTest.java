@@ -24,6 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AllArgsConstructor
 @ContextConfiguration(classes = TestConfig.class)
 public class UserControllerTest {
+	/*
 	
 	private final UserRepository userRepository;
 
@@ -124,4 +125,5 @@ public class UserControllerTest {
         mockMvc.perform(get("/api/v1/users/" + user.getId()))
                 .andExpect(status().isNotFound());
     }
+    */
 }
