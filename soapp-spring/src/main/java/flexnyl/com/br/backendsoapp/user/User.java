@@ -3,19 +3,20 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Table (name = "tb_user")
 @AllArgsConstructor
-@RequiredArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
 public class User {
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
-	private final long id;
+	private long id;
 	
 	@NotBlank
 	@Column(unique = true, name = "user_name")

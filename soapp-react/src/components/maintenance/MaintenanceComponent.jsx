@@ -1,8 +1,11 @@
-import {useNavigate, useParams} from "react-router-dom";
-import {useEffect, useState} from "react";
-import {createMaintenance, getMaintenance, updateMaintenance} from "./MaintenanceService.js";
-import {listUsers} from "../user/UserService.js";
-import {format, parse} from 'date-fns';
+import { useNavigate, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { createMaintenance, getMaintenance, updateMaintenance } from "./MaintenanceService.js";
+import { listUsers } from "../user/UserService.js";
+import { listMaintenanceElectricals } from "../maintenance-electricals/MaintenanceElectricalService.js";
+import { listMaintenanceMechanicals } from "../maintenance-mechanicals/MaintenanceMechanicalService.js";
+
+import { format, parse } from 'date-fns';
 
 const MaintenanceComponent = () => {
 
@@ -14,13 +17,22 @@ const MaintenanceComponent = () => {
     const [userId, setUserId] = useState('')
     const [users, setUsers] = useState([])
 
+    const [maintenanceElectricalId, setMaintenanceElectricalId] = useState('')
+    const [maintenanceElectricals, setMaintenanceElectricals] = useState([])
+
+    const [maintenanceMechanicalId, setMaintenanceMechanicalId] = useState('')
+    const [maintenanceMechanicals, setMaintenanceMechanicals] = useState([])
+
     const navigator = useNavigate();
 
-    const [errors, setErrors] = useState ({
-            maintenanceRecord: '',
-            maintenanceReview: '',
-            maintenanceEmissionDate: '',
-            user: ''
+    const [errors, setErrors] = useState({
+        maintenanceRecord: '',
+        maintenanceReview: '',
+        maintenanceEmissionDate: '',
+        user: '',
+        maintenanceElectrical: '',
+        maintenanceMechanical: ''
+
     })
 
 
@@ -38,7 +50,21 @@ const MaintenanceComponent = () => {
         }
     };
 
+    useEffect(() => {
+        listMaintenanceElectricals().then((response) => {
+            setMaintenanceElectricals(response.data);
+        }).catch(error => {
+            console.error(error);
+        })
+    }, [])
 
+    useEffect(() => {
+        listMaintenanceMechanicals().then((response) => {
+            setMaintenanceMechanicals(response.data);
+        }).catch(error => {
+            console.error(error);
+        })
+    }, [])
 
     useEffect(() => {
         listUsers().then((response) => {
@@ -55,6 +81,8 @@ const MaintenanceComponent = () => {
                 setMaintenanceReview(response.data.maintenanceReview);
                 setMaintenanceEmissionDate(response.data.maintenanceEmissionDate);
                 setUserId(response.data.userId);
+                setMaintenanceElectricalId(response.data.maintenanceElectricalId);
+                setMaintenanceMechanicalId(response.data.maintenanceMechanicalId);
             }).catch(error => {
                 console.error(error);
             })
@@ -64,7 +92,7 @@ const MaintenanceComponent = () => {
 
 
 
-    function saveOrUpdateMaintenance(e){
+    function saveOrUpdateMaintenance(e) {
         e.preventDefault();
         const iso8601Date = convertToISO8601(); // Converte a data para ISO 8601
 
@@ -77,12 +105,14 @@ const MaintenanceComponent = () => {
 
         if (validateForm()) {
             const maintenance =
-                {
-                    maintenanceRecord,
-                    maintenanceReview,
-                    maintenanceEmissionDate: iso8601Date,
-                    userId
-                };
+            {
+                maintenanceRecord,
+                maintenanceReview,
+                maintenanceEmissionDate: iso8601Date,
+                userId,
+                maintenanceElectricalId,
+                maintenanceMechanicalId
+            };
             console.log(maintenance)
             if (id) {
                 updateMaintenance(id, maintenance)
@@ -108,40 +138,56 @@ const MaintenanceComponent = () => {
 
     function validateForm() {
         let valid = true;
-        const errorsCopy = { ...errors};
+        const errorsCopy = { ...errors };
 
-        if (maintenanceRecord.trim()){
+        if (maintenanceRecord.trim()) {
             errorsCopy.maintenanceReview = '';
         } else {
             errorsCopy.maintenanceReview = 'Digite a revisão';
             valid = false;
         }
 
-        if (maintenanceReview.trim()){
+        if (maintenanceReview.trim()) {
             errorsCopy.maintenanceRecord = '';
         } else {
             errorsCopy.maintenanceRecord = 'Digite o registro'
         }
 
-        if (maintenanceEmissionDate.trim()){
+        if (maintenanceEmissionDate.trim()) {
             errorsCopy.maintenanceEmissionDate = '';
         } else {
             errorsCopy.maintenanceEmissionDate = 'Digite a data'
         }
 
-        if (userId){
+        if (userId) {
             errorsCopy.user = '';
         } else {
             errorsCopy.user = 'Selecione um usuário'
             valid = false
         }
 
+
+        if (maintenanceElectricalId) {
+            errorsCopy.maintenanceElectrical = '';
+        } else {
+            errorsCopy.maintenanceElectrical = 'Selecione uma manutenção elétrica'
+            valid = false
+        }
+
+        if (maintenanceMechanicalId) {
+            errorsCopy.maintenanceMechanical = '';
+        } else {
+            errorsCopy.maintenanceMechanical = 'Selecione uma manutenção mecânica'
+            valid = false
+        }
+
+
         setErrors(errorsCopy);
         return valid;
     }
 
     function pageTitle() {
-        if (id){
+        if (id) {
             return <h2 className="text-center">Atualizar ficha de manutenção</h2>
         } else {
             return <h2 className="text-center">Criar ficha de manutenção</h2>
@@ -209,12 +255,47 @@ const MaintenanceComponent = () => {
                                     <option value="Selecione o usuário">Selecione o usuário</option>
                                     {
                                         users.map(user =>
-                                        <option key={user.id} value={user.id}>{user.userName}</option>
+                                            <option key={user.id} value={user.id}>{user.userName}</option>
                                         )
                                     }
                                 </select>
                                 {errors.user && <div className='invalid-feedback'>{errors.user}</div>}
                             </div>
+
+                            <div className="form-group mb-2">
+                                <label className='form-label'>Selecione as manutenções elétricas:</label>
+                                <select
+                                    className={`form-control ${errors.maintenanceElectrical ? 'is-invalid' : ''}`}
+                                    value={maintenanceElectricalId}
+                                    onChange={(e) => setMaintenanceElectricalId(e.target.value)}
+                                >
+                                    <option value="Selecione as manutenções elétricas">Selecione as manutenções elétricas</option>
+                                    {
+                                        maintenanceElectricals.map(maintenanceElectrical =>
+                                            <option key={maintenanceElectrical.id} value={maintenanceElectrical.id}>{maintenanceElectrical.type}</option>
+                                        )
+                                    }
+                                </select>
+                                {errors.maintenanceElectrical && <div className='invalid-feedback'>{errors.maintenanceElectrical}</div>}
+                            </div>
+
+                            <div className="form-group mb-2">
+                                <label className='form-label'>Selecione as manutenções mecânicas:</label>
+                                <select
+                                    className={`form-control ${errors.maintenanceMechanical ? 'is-invalid' : ''}`}
+                                    value={maintenanceMechanicalId}
+                                    onChange={(e) => setMaintenanceMechanicalId(e.target.value)}
+                                >
+                                    <option value="Selecione as manutenções mecânicas">Selecione as manutenções mecânicas</option>
+                                    {
+                                        maintenanceMechanicals.map(maintenanceMechanical =>
+                                            <option key={maintenanceMechanical.id} value={maintenanceMechanical.id}>{maintenanceMechanical.type}</option>
+                                        )
+                                    }
+                                </select>
+                                {errors.maintenanceMechanical && <div className='invalid-feedback'>{errors.maintenanceMechanical}</div>}
+                            </div>
+
                             <button className="btn btn-success mb-2" onClick={saveOrUpdateMaintenance}>Enviar</button>
 
                         </form>
