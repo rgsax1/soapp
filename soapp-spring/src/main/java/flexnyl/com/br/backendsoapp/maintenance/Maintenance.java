@@ -1,8 +1,9 @@
 package flexnyl.com.br.backendsoapp.maintenance;
-import flexnyl.com.br.backendsoapp.maintenanceElectrical.MaintenanceElectrical;
-import flexnyl.com.br.backendsoapp.maintenanceMechanical.MaintenanceMechanical;
+import java.util.List;
+
 import flexnyl.com.br.backendsoapp.user.User;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,7 +17,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Maintenance {
-	
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	private long id;
@@ -24,19 +24,22 @@ public class Maintenance {
 	private int maintenanceReview;
 	
 
+	@NotNull
 	@Column(name = "maintenance_emission_date")
 	private String maintenanceEmissionDate;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn (name = "user_id")
+	@NotNull
 	private User user;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn (name = "equipment_electrical_id")
-	private MaintenanceElectrical maintenanceElectrical;
+
+	@ElementCollection
+	@CollectionTable(name = "maintenance_electrical_selections", joinColumns = @JoinColumn(name = "maintenance_id"))
+	private List<Long> maintenanceElectricalIds;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn (name = "equipment_mechanical_id")
-	private MaintenanceMechanical maintenanceMechanical;
+	@ElementCollection
+	@CollectionTable(name = "maintenance_mechanical_selections", joinColumns = @JoinColumn(name = "maintenance_id"))
+	private List<Long> maintenanceMechanicalIds;
 	
 }

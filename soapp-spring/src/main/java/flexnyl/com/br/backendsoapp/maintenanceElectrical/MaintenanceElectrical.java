@@ -18,5 +18,4 @@ public class MaintenanceElectrical {
     private long id;
     private String type;
 
- 
 }

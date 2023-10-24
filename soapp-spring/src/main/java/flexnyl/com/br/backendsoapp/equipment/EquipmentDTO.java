@@ -15,6 +15,4 @@ public class EquipmentDTO {
 	private String equipmentSector;
 	private String equipmentManufacturer;
 	private String equipmentModel;
-	
-
 }

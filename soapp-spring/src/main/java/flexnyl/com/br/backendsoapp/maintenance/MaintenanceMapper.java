@@ -1,5 +1,6 @@
 package flexnyl.com.br.backendsoapp.maintenance;
 
+import java.util.List;
 
 public class MaintenanceMapper {
 
@@ -11,16 +12,19 @@ public class MaintenanceMapper {
         maintenance.setMaintenanceEmissionDate(maintenanceDTO.getMaintenanceEmissionDate());
         return maintenance;
     }
-
+    
     public static MaintenanceDTO mapToMaintenanceDTO(Maintenance maintenance) {
+        List<Long> electricalIds = maintenance.getMaintenanceElectricalIds();
+        List<Long> mechanicalIds = maintenance.getMaintenanceMechanicalIds();
+
         return new MaintenanceDTO(
                 maintenance.getId(),
                 maintenance.getMaintenanceRecord(),
                 maintenance.getMaintenanceReview(),
                 maintenance.getMaintenanceEmissionDate(),
                 maintenance.getUser().getId(),
-                maintenance.getMaintenanceElectrical().getId(),
-                maintenance.getMaintenanceMechanical().getId()
+                mechanicalIds,
+                electricalIds
         );
     }
 }

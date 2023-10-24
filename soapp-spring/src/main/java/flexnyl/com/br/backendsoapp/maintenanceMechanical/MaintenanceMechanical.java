@@ -1,6 +1,7 @@
 package flexnyl.com.br.backendsoapp.maintenanceMechanical;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,8 +18,8 @@ public class MaintenanceMechanical {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
+    
+    @NotNull
+    @Column(name = "type")
     private String type;
-
-   
 }
