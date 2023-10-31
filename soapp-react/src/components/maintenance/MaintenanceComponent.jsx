@@ -2,11 +2,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { createMaintenance, getMaintenance, updateMaintenance } from "./MaintenanceService.js";
 import { listUsers } from "../user/UserService.js";
-import { listMaintenanceElectricals } from "../maintenance-electricals/MaintenanceElectricalService.js";
-import { listMaintenanceMechanicals } from "../maintenance-mechanicals/MaintenanceMechanicalService.js";
 import  SelectMaintenanceElectrical  from "./SelectMaintenanceElectrical.jsx";
 import  SelectMaintenanceMechanical  from "./SelectMaintenanceMechanical.jsx";
-
 import { format, parse } from 'date-fns';
 
 const MaintenanceComponent = () => {
@@ -15,26 +12,19 @@ const MaintenanceComponent = () => {
     const [maintenanceRecord, setMaintenanceRecord] = useState('')
     const [maintenanceReview, setMaintenanceReview] = useState('')
     const [maintenanceEmissionDate, setMaintenanceEmissionDate] = useState('')
-
     const [userId, setUserId] = useState('')
     const [users, setUsers] = useState([])
-
-    const [maintenanceElectricalId, setMaintenanceElectricalId] = useState([])
-
-    const [maintenanceMechanicalId, setMaintenanceMechanicalId] = useState([])
-
+    const [maintenanceElectricalIds, setMaintenanceElectricalIds] = useState([])
+    const [maintenanceMechanicalIds, setMaintenanceMechanicalIds] = useState([])
     const navigator = useNavigate();
-
     const [errors, setErrors] = useState({
         maintenanceRecord: '',
         maintenanceReview: '',
         maintenanceEmissionDate: '',
         user: '',
-        maintenanceElectrical: '',
-        maintenanceMechanical: ''
+        maintenanceElectricalIds: '',
+        maintenanceMechanicalIds: ''
     })
-
-
 
     const convertToISO8601 = () => {
         try {
@@ -48,22 +38,6 @@ const MaintenanceComponent = () => {
             return null; // Retorna null em caso de erro na conversão
         }
     };
-
-    useEffect(() => {
-        listMaintenanceElectricals().then((response) => {
-            setMaintenanceElectricals(response.data);
-        }).catch(error => {
-            console.error(error);
-        })
-    }, [])
-
-    useEffect(() => {
-        listMaintenanceMechanicals().then((response) => {
-            setMaintenanceMechanicals(response.data);
-        }).catch(error => {
-            console.error(error);
-        })
-    }, [])
 
     useEffect(() => {
         listUsers().then((response) => {
@@ -80,19 +54,14 @@ const MaintenanceComponent = () => {
                 setMaintenanceReview(response.data.maintenanceReview);
                 setMaintenanceEmissionDate(response.data.maintenanceEmissionDate);
                 setUserId(response.data.userId);
-                setMaintenanceElectricalId(response.data.maintenanceElectricalId);
-                setMaintenanceMechanicalId(response.data.maintenanceMechanicalId);
+                setMaintenanceElectricalIds(response.data.maintenanceElectricalIds);
+                setMaintenanceMechanicalIds(response.data.maintenanceMechanicalIds);
             }).catch(error => {
                 console.error(error);
-            })
+            });
         }
     }, [id]);
 
-    function handleElectricalMaintenanceSelect(selectedOptions) {
-        // Extrai apenas os IDs das opções selecionadas
-        const selectedIds = selectedOptions.map(option => option.value);
-        setMaintenanceElectricalId(selectedIds);
-    }
 
 
 
@@ -115,7 +84,7 @@ const MaintenanceComponent = () => {
                     maintenanceEmissionDate: iso8601Date,
                     userId,
                     maintenanceElectricalIds,
-                    maintenanceMechanicalId
+                    maintenanceMechanicalIds,
                 };
             console.log(maintenance)
             if (id) {
@@ -254,16 +223,16 @@ const MaintenanceComponent = () => {
                             <div className="form-group mb-2">
                                 <label className='form-label'>Selecione as manutenções elétricas:</label>
                                 <SelectMaintenanceElectrical
-                                    value={maintenanceElectricalId}
-                                    onChange={(value) => setMaintenanceElectricalId(value)}
+                                    value={maintenanceElectricalIds}
+                                    onChange={(value) => setMaintenanceElectricalIds(value)}
                                 />
                             </div>
 
                             <div className="form-group mb-2">
                                 <label className='form-label'>Selecione as manutenções mecânicas:</label>
                                 <SelectMaintenanceMechanical
-                                    value={maintenanceMechanicalId}
-                                    onChange={(value) => setMaintenanceMechanicalId(value)}
+                                    value={maintenanceMechanicalIds}
+                                    onChange={(value) => setMaintenanceMechanicalIds(value)}
                                 />
                             </div>
 

@@ -23,13 +23,15 @@ function SelectMaintenanceMechanical() {
     }, []);
 
     const handleMaintenanceSelect = (selectedOptions) => {
-        setSelectedMaintenance(selectedOptions);
+        setSelectedMaintenance(selectedOptions); // Atualiza o estado com as opções selecionadas
     };
 
-    // Função para obter somente os IDs selecionados
+// Função para obter somente os IDs selecionados
     const getSelectedMaintenanceIDs = () => {
         return selectedMaintenance.map(option => option.value);
     };
+
+
 
     return (
         <div>
