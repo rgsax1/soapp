@@ -4,6 +4,9 @@ import { createMaintenance, getMaintenance, updateMaintenance } from "./Maintena
 import { listUsers } from "../user/UserService.js";
 import { listMaintenanceElectricals } from "../maintenance-electricals/MaintenanceElectricalService.js";
 import { listMaintenanceMechanicals } from "../maintenance-mechanicals/MaintenanceMechanicalService.js";
+import { SelectMaintenanceElectrical } from './SelectMaintenanceElectrical.jsx'; // Importe o componente de seleção de manutenções elétricas
+import { SelectMaintenanceMechanical }from './SelectMaintenanceMechanical.jsx'; // Importe o componente de seleção de manutenções mecânicas
+
 
 import { format, parse } from 'date-fns';
 

@@ -15,6 +15,8 @@ import MaintenanceMechanicalComponent from "./components/maintenance-mechanicals
 import OrderComponent from "./components/order/OrderComponent.jsx";
 import ListOrderComponent from "./components/order/ListOrderComponent.jsx";
 import LoginComponent from "./components/login/LoginComponent.jsx";
+import SelectMaintenanceMechanical from "./components/maintenance/SelectMaintenanceMechanical.jsx";
+import SelectMaintenanceElectrical from "./components/maintenance/SelectMaintenanceElectrical.jsx";
 
 function App() {
 
@@ -51,6 +53,10 @@ function App() {
 
 
                     <Route path="/login" element={<LoginComponent />}></Route>
+
+
+                    <Route path="/test" element={<SelectMaintenanceMechanical/>}></Route>
+                    <Route path="/test2" element={<SelectMaintenanceElectrical/>}></Route>
                 </Routes>
                 <FooterComponent/>
             </BrowserRouter>
