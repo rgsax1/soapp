@@ -36,3 +36,16 @@ VALUES
   ('William', 'Engineer', 'Wilson', 'pwd123', FLOOR(RAND() * 3), 'williamwilson'),
   ('Sophia', 'Designer', 'Martinez', 'p@ssword', FLOOR(RAND() * 3), 'sophiamartinez'),
   ('Michael', 'Tester', 'Harris', 'random123', FLOOR(RAND() * 3), 'michaelharris');
+
+INSERT INTO soapp.equipment (equipment_manufacturer, equipment_model, equipment_name, equipment_sector)
+VALUES
+    ('ZiperCorp', 'ZP1000', 'Máquina de Produção de Zíperes 1', 'Produção de Zíperes'),
+    ('ZiperTech', 'ZipMaster 2000', 'Máquina de Produção de Zíperes 2', 'Produção de Zíperes'),
+    ('ZiperTech', 'ZipPro X3', 'Máquina de Produção de Zíperes 3', 'Produção de Zíperes'),
+    ('FastZips', 'FZ-500', 'Máquina de Produção de Zíperes 4', 'Produção de Zíperes'),
+    ('ZipItUp', 'ZipMaster 3000', 'Máquina de Produção de Zíperes 5', 'Produção de Zíperes'),
+    ('ZiperCorp', 'ZP2000', 'Máquina de Produção de Zíperes 6', 'Produção de Zíperes'),
+    ('FastZips', 'FZ-1000', 'Máquina de Produção de Zíperes 7', 'Produção de Zíperes'),
+    ('ZiperTech', 'ZipPro X5', 'Máquina de Produção de Zíperes 8', 'Produção de Zíperes'),
+    ('ZipItUp', 'ZipMaster 4000', 'Máquina de Produção de Zíperes 9', 'Produção de Zíperes'),
+    ('ZiperCorp', 'ZP3000', 'Máquina de Produção de Zíperes 10', 'Produção de Zíperes');
