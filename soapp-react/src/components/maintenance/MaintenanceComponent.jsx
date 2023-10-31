@@ -4,9 +4,8 @@ import { createMaintenance, getMaintenance, updateMaintenance } from "./Maintena
 import { listUsers } from "../user/UserService.js";
 import { listMaintenanceElectricals } from "../maintenance-electricals/MaintenanceElectricalService.js";
 import { listMaintenanceMechanicals } from "../maintenance-mechanicals/MaintenanceMechanicalService.js";
-import { SelectMaintenanceElectrical } from './SelectMaintenanceElectrical.jsx'; // Importe o componente de seleção de manutenções elétricas
-import { SelectMaintenanceMechanical }from './SelectMaintenanceMechanical.jsx'; // Importe o componente de seleção de manutenções mecânicas
-
+import  SelectMaintenanceElectrical  from "./SelectMaintenanceElectrical.jsx";
+import  SelectMaintenanceMechanical  from "./SelectMaintenanceMechanical.jsx";
 
 import { format, parse } from 'date-fns';
 
@@ -20,11 +19,9 @@ const MaintenanceComponent = () => {
     const [userId, setUserId] = useState('')
     const [users, setUsers] = useState([])
 
-    const [maintenanceElectricalId, setMaintenanceElectricalId] = useState('')
-    const [maintenanceElectricals, setMaintenanceElectricals] = useState([])
+    const [maintenanceElectricalId, setMaintenanceElectricalId] = useState([])
 
-    const [maintenanceMechanicalId, setMaintenanceMechanicalId] = useState('')
-    const [maintenanceMechanicals, setMaintenanceMechanicals] = useState([])
+    const [maintenanceMechanicalId, setMaintenanceMechanicalId] = useState([])
 
     const navigator = useNavigate();
 
@@ -35,7 +32,6 @@ const MaintenanceComponent = () => {
         user: '',
         maintenanceElectrical: '',
         maintenanceMechanical: ''
-
     })
 
 
@@ -92,6 +88,11 @@ const MaintenanceComponent = () => {
         }
     }, [id]);
 
+    function handleElectricalMaintenanceSelect(selectedOptions) {
+        // Extrai apenas os IDs das opções selecionadas
+        const selectedIds = selectedOptions.map(option => option.value);
+        setMaintenanceElectricalId(selectedIds);
+    }
 
 
 
@@ -108,14 +109,14 @@ const MaintenanceComponent = () => {
 
         if (validateForm()) {
             const maintenance =
-            {
-                maintenanceRecord,
-                maintenanceReview,
-                maintenanceEmissionDate: iso8601Date,
-                userId,
-                maintenanceElectricalId,
-                maintenanceMechanicalId
-            };
+                {
+                    maintenanceRecord,
+                    maintenanceReview,
+                    maintenanceEmissionDate: iso8601Date,
+                    userId,
+                    maintenanceElectricalIds,
+                    maintenanceMechanicalId
+                };
             console.log(maintenance)
             if (id) {
                 updateMaintenance(id, maintenance)
@@ -166,21 +167,6 @@ const MaintenanceComponent = () => {
             errorsCopy.user = '';
         } else {
             errorsCopy.user = 'Selecione um usuário'
-            valid = false
-        }
-
-
-        if (maintenanceElectricalId) {
-            errorsCopy.maintenanceElectrical = '';
-        } else {
-            errorsCopy.maintenanceElectrical = 'Selecione uma manutenção elétrica'
-            valid = false
-        }
-
-        if (maintenanceMechanicalId) {
-            errorsCopy.maintenanceMechanical = '';
-        } else {
-            errorsCopy.maintenanceMechanical = 'Selecione uma manutenção mecânica'
             valid = false
         }
 
@@ -267,36 +253,18 @@ const MaintenanceComponent = () => {
 
                             <div className="form-group mb-2">
                                 <label className='form-label'>Selecione as manutenções elétricas:</label>
-                                <select
-                                    className={`form-control ${errors.maintenanceElectrical ? 'is-invalid' : ''}`}
+                                <SelectMaintenanceElectrical
                                     value={maintenanceElectricalId}
-                                    onChange={(e) => setMaintenanceElectricalId(e.target.value)}
-                                >
-                                    <option value="Selecione as manutenções elétricas">Selecione as manutenções elétricas</option>
-                                    {
-                                        maintenanceElectricals.map(maintenanceElectrical =>
-                                            <option key={maintenanceElectrical.id} value={maintenanceElectrical.id}>{maintenanceElectrical.type}</option>
-                                        )
-                                    }
-                                </select>
-                                {errors.maintenanceElectrical && <div className='invalid-feedback'>{errors.maintenanceElectrical}</div>}
+                                    onChange={(value) => setMaintenanceElectricalId(value)}
+                                />
                             </div>
 
                             <div className="form-group mb-2">
                                 <label className='form-label'>Selecione as manutenções mecânicas:</label>
-                                <select
-                                    className={`form-control ${errors.maintenanceMechanical ? 'is-invalid' : ''}`}
+                                <SelectMaintenanceMechanical
                                     value={maintenanceMechanicalId}
-                                    onChange={(e) => setMaintenanceMechanicalId(e.target.value)}
-                                >
-                                    <option value="Selecione as manutenções mecânicas">Selecione as manutenções mecânicas</option>
-                                    {
-                                        maintenanceMechanicals.map(maintenanceMechanical =>
-                                            <option key={maintenanceMechanical.id} value={maintenanceMechanical.id}>{maintenanceMechanical.type}</option>
-                                        )
-                                    }
-                                </select>
-                                {errors.maintenanceMechanical && <div className='invalid-feedback'>{errors.maintenanceMechanical}</div>}
+                                    onChange={(value) => setMaintenanceMechanicalId(value)}
+                                />
                             </div>
 
                             <button className="btn btn-success mb-2" onClick={saveOrUpdateMaintenance}>Enviar</button>

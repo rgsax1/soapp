@@ -2,18 +2,18 @@ import React, { useState, useEffect } from 'react';
 import Select from 'react-select';
 import { listMaintenanceMechanicals } from "../maintenance-mechanicals/MaintenanceMechanicalService.js";
 
-function MaintenanceMechanicalSelect() {
+function SelectMaintenanceMechanical() {
     const [maintenanceOptions, setMaintenanceOptions] = useState([]);
-    const [selectedMaintenance, setSelectedMaintenance] = useState([]); // Usando um array para armazenar múltiplas seleções
+    const [selectedMaintenance, setSelectedMaintenance] = useState([]);
 
     useEffect(() => {
         // Carrega a lista de manutenções mecânicas quando o componente montar
         listMaintenanceMechanicals()
             .then((response) => {
-                // Mapeia os dados da resposta para exibir apenas o "type"
+                // Mapeia os dados da resposta para criar as opções de seleção
                 const options = response.data.map((maintenance) => ({
-                    label: maintenance.type, // O tipo da manutenção
-                    value: maintenance.id,  // O ID da manutenção (pode ser removido se não for necessário)
+                    label: maintenance.type, // O tipo da manutenção mecânica
+                    value: maintenance.id,  // O ID da manutenção
                 }));
                 setMaintenanceOptions(options);
             })
@@ -26,17 +26,23 @@ function MaintenanceMechanicalSelect() {
         setSelectedMaintenance(selectedOptions);
     };
 
+    // Função para obter somente os IDs selecionados
+    const getSelectedMaintenanceIDs = () => {
+        return selectedMaintenance.map(option => option.value);
+    };
+
     return (
         <div>
-            <h3>Selecione uma Manutenção Mecânica:</h3>
             <Select
                 options={maintenanceOptions}
                 value={selectedMaintenance}
                 onChange={handleMaintenanceSelect}
                 isMulti={true} // Habilita a seleção de múltiplos valores
             />
+            {/* Exibe os tipos selecionados para o usuário no frontend */}
+            <div>IDs Selecionados: {getSelectedMaintenanceIDs().join(', ')}</div>
         </div>
     );
 }
 
-export default MaintenanceMechanicalSelect;
+export default SelectMaintenanceMechanical;
