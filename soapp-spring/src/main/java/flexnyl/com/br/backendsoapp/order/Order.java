@@ -4,6 +4,7 @@ import java.util.Calendar;
 import flexnyl.com.br.backendsoapp.equipment.Equipment;
 import flexnyl.com.br.backendsoapp.user.User;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,13 +25,16 @@ public class Order {
 	private String observations;
 	private String analysis;
 	
-	@OneToOne
-	@PrimaryKeyJoinColumn
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn (name = "user_id")
+	@NotNull
 	private User user;
 	
-	@OneToOne
-	@PrimaryKeyJoinColumn
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn (name = "equipment_id")
+	@NotNull
 	private Equipment equipment;
+	
 	private String signatureResponsible;
 	private String signatureMechanical;
 	
