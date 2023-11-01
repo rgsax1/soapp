@@ -714,3 +714,4 @@ FodyWeavers.xsd
 # Additional files built by Visual Studio
 
 # End of https://www.toptal.com/developers/gitignore/api/java,maven,gradle,intellij,visualstudio,visualstudiocode,eclipse,react,angular
+soapp-spring/.vscode/launch.json
