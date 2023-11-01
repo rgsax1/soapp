@@ -114,46 +114,37 @@ const ListMaintenanceComponent = () => {
         <div className="container">
             <h2 className="text-center">Fichas de Manutenções</h2>
             <button className="btn btn-primary mb-2" onClick={addNewMaintenance}>Criar nova ficha</button>
-            <div className="maintenance-table">
-                {
-                    maintenances.map((maintenance) => (
-                        <div className="maintenance-row" key={maintenance.id}>
-                            <div className="maintenance-column">
-                                <strong>Id:</strong> {maintenance.id}
+            <div className="row">
+                {maintenances.map((maintenance) => (
+                    <div className="col-md-6" key={maintenance.id}>
+                        <div className="card maintenance-card">
+                            <div className="card-body">
+                                <h5 className="card-title"><strong>ID:</strong> {maintenance.id}</h5>
+                                <p className="card-text"><strong>Registro:</strong> {maintenance.maintenanceRecord}</p>
+                                <p className="card-text"><strong>Revisão:</strong> {maintenance.maintenanceReview}</p>
+                                <p className="card-text"><strong>Data de criação:</strong> {formatDate(maintenance.maintenanceEmissionDate)}</p>
+                                <p className="card-text"><strong>Aprovado por:</strong> {mapUserIdToUserName(maintenance.userId, users)}</p>
+                                <p className="card-text"><strong>Manutenção elétrica:</strong></p>
+                                {mapMaintenanceElectricalIdsToTypes(maintenance.maintenanceElectricalIds, maintenanceElectricals).map((id) => (
+                                    <p key={id}>{id}</p>
+                                ))}
+                                <p className="card-text"><strong>Manutenção mecânica:</strong></p>
+                                {mapMaintenanceMechanicallIdsToTypes(maintenance.maintenanceMechanicalIds, maintenanceMechanicals).map((id) => (
+                                    <p key={id}>{id}</p>
+                                ))}
+                                <div className="maintenance-actions">
+                                    <button className="btn btn-info" onClick={() => updateMaintenance(maintenance.id)}>Editar</button>
+                                    <button className="btn btn-danger" onClick={() => removeMaintenance(maintenance.id)}>Excluir</button>
+                                </div>
                             </div>
-                            <div className="maintenance-column">
-                                <strong>Registro:</strong> {maintenance.maintenanceRecord}
-                            </div>
-                            <div className="maintenance-column">
-                                <strong>Revisão:</strong> {maintenance.maintenanceReview}
-                            </div>
-                            <div className="maintenance-column">
-                                <strong>Data de criação:</strong> {formatDate(maintenance.maintenanceEmissionDate)}
-                            </div>
-                            <div className="maintenance-column">
-                                <strong>Aprovado por:</strong> {mapUserIdToUserName(maintenance.userId, users)}
-                            </div>
-                            <div className="maintenance-column">
-                                <strong>Manutenção elétrica:</strong> {mapMaintenanceElectricalIdsToTypes(maintenance.maintenanceElectricalIds, maintenanceElectricals).join(', ')}
-                            </div>
-                            <div className="maintenance-column">
-                                <strong>Manutenção mecânica:</strong> {mapMaintenanceMechanicallIdsToTypes(maintenance.maintenanceMechanicalIds, maintenanceMechanicals).join(', ')}
-                            </div>
-                            <div className="maintenance-actions">
-                                <button className="btn btn-info" onClick={() => updateMaintenance(maintenance.id)}>
-                                    Editar
-                                </button>
-                                <button className="btn btn-danger" onClick={() => removeMaintenance(maintenance.id)} style={{ marginLeft: '10px' }}>
-                                    Excluir
-                                </button>
-                            </div>
-
                         </div>
-                    ))
-                }
+                    </div>
+                ))}
             </div>
         </div>
     );
+    
+    
 
 }
 
