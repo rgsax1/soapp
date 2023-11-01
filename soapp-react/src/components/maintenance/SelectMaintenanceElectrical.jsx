@@ -2,19 +2,15 @@ import React, { useState, useEffect } from 'react';
 import Select from 'react-select';
 import { listMaintenanceElectricals } from "../maintenance-electricals/MaintenanceElectricalService.js";
 
-function SelectMaintenanceElectrical() {
-    // State para armazenar as opções de manutenção elétrica
+function SelectMaintenanceElectrical({ value, onChange }) {
     const [maintenanceOptions, setMaintenanceOptions] = useState([]);
-    // State para armazenar as seleções feitas pelo usuário
-    const [selectedMaintenance, setSelectedMaintenance] = useState([]);
+    const selectedMaintenanceIds = value || [];
 
-    // Efeito para carregar a lista de manutenções elétricas quando o componente montar
     useEffect(() => {
         listMaintenanceElectricals()
             .then((response) => {
-                // Mapeia os dados da resposta para criar as opções de seleção
                 const options = response.data.map((maintenance) => ({
-                    label: maintenance.type, // O tipo da manutenção elétrica
+                    label: maintenance.type,
                     value: maintenance.id,
                 }));
                 setMaintenanceOptions(options);
@@ -24,26 +20,19 @@ function SelectMaintenanceElectrical() {
             });
     }, []);
 
-    // Função para lidar com a seleção de opções pelo usuário
     const handleMaintenanceSelect = (selectedOptions) => {
-        setSelectedMaintenance(selectedOptions);
-    };
-
-    // Função para obter somente os IDs selecionados
-    const getSelectedMaintenanceIDs = () => {
-        return selectedMaintenance.map(option => option.value);
+        const selectedIds = selectedOptions.map((option) => option.value);
+        onChange(selectedIds);
     };
 
     return (
         <div>
             <Select
                 options={maintenanceOptions}
-                value={selectedMaintenance}
+                value={maintenanceOptions.filter((option) => selectedMaintenanceIds.includes(option.value))}
                 onChange={handleMaintenanceSelect}
-                isMulti={true} // Habilita a seleção de múltiplos valores
+                isMulti={true}
             />
-            {/* Exibe os IDs selecionados (pode ser usado no envio para o backend) */}
-            <div>IDs Selecionados: {getSelectedMaintenanceIDs().join(', ')}</div>
         </div>
     );
 }
