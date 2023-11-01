@@ -10,9 +10,11 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class EquipmentDTO {
-	private long id;
-	private String equipmentName;
-	private String equipmentSector;
-	private String equipmentManufacturer;
-	private String equipmentModel;
+    private long id;
+    private String equipmentManufacturer;
+    private String equipmentModel;
+    private String description;
+    private String installationDate;
+    private String equipmentSector;
+    private String baptism;
 }

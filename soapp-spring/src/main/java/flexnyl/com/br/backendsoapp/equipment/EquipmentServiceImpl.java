@@ -33,23 +33,26 @@ public class EquipmentServiceImpl implements EquipmentService {
     @Override
     public List<EquipmentDTO> getAllEquipment() {
     	List<Equipment> equipments = equipmentRepository.findAll();
-    	return equipments.stream().map((equipment) -> EquipmentMapper.mapToEquipmentDTO(equipment))
+    	return equipments.stream().map(EquipmentMapper::mapToEquipmentDTO)
     	.collect(Collectors.toList());	
     }
 
-    @Override
-    public EquipmentDTO updateEquipment(long id, EquipmentDTO updatedEquipment) {
-    	Equipment equipment = equipmentRepository.findById(id).orElseThrow(
-    	() -> new ResourceNotFoundException("Equipment with id: "+ id +" not found.")
-    	);
-    	equipment.setEquipmentManufacturer(updatedEquipment.getEquipmentManufacturer());
-    	equipment.setEquipmentModel(updatedEquipment.getEquipmentModel());
-    	equipment.setEquipmentName(updatedEquipment.getEquipmentName());
-    	equipment.setEquipmentSector(updatedEquipment.getEquipmentSector());
-    	
-    	Equipment updatedEquipmentObj = equipmentRepository.save(equipment);
-    	return EquipmentMapper.mapToEquipmentDTO(updatedEquipmentObj);
-    }
+@Override
+public EquipmentDTO updateEquipment(long id, EquipmentDTO updatedEquipment) {
+    Equipment equipment = equipmentRepository.findById(id).orElseThrow(
+        () -> new ResourceNotFoundException("Equipment with id: " + id + " not found.")
+    );
+    equipment.setEquipmentManufacturer(updatedEquipment.getEquipmentManufacturer());
+    equipment.setEquipmentModel(updatedEquipment.getEquipmentModel());
+    equipment.setDescription(updatedEquipment.getDescription());
+    equipment.setInstallationDate(updatedEquipment.getInstallationDate());
+    equipment.setEquipmentSector(updatedEquipment.getEquipmentSector());
+    equipment.setBaptism(updatedEquipment.getBaptism());
+
+    Equipment updatedEquipmentObj = equipmentRepository.save(equipment);
+    return EquipmentMapper.mapToEquipmentDTO(updatedEquipmentObj);
+}
+
 
     @Override
     public void deleteEquipment(long id) {

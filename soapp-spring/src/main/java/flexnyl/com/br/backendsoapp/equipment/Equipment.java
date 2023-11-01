@@ -17,21 +17,23 @@ public class Equipment {
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	private long id;
-	
-	@NotNull
-	@Column(name = "equipment_name")
-	private String equipmentName;
-	
-	@NotNull
-	@Column(name = "equipment_sector")
-	private String equipmentSector;
-	
-	@NotNull
+
 	@Column(name = "equipment_manufacturer")
 	private String equipmentManufacturer;
-	
-	@NotNull
+
 	@Column(name = "equipment_model")
 	private String equipmentModel;
+
+	@Column(name = "description")
+	private String description;
+
+	@Column(name = "installation_date")
+	private String installationDate;
+
+	@Column(name = "equipment_sector")
+	private String equipmentSector;
+
+	@Column(name = "baptism")
+	private String baptism;
 	
 }
