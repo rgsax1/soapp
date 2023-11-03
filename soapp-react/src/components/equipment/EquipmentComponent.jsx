@@ -61,11 +61,10 @@ const EquipmentComponent = () => {
                         console.error(error);
                     });
             } else {
-                createEquipment(equipment)
-                    .then((response) => {
-                        console.log(response.data);
-                        navigator('/equipments');
-                    })
+                createEquipment(equipment).then((response) => {
+                    console.log(response.data);
+                    navigator('/equipments');
+                })
                     .catch((error) => {
                         console.error(error);
                     });
