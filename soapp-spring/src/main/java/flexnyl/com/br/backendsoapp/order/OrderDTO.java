@@ -1,6 +1,5 @@
 package flexnyl.com.br.backendsoapp.order;
 
-import flexnyl.com.br.backendsoapp.equipment.Equipment;
 import flexnyl.com.br.backendsoapp.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

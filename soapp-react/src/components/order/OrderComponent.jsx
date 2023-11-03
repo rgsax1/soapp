@@ -4,24 +4,6 @@ import {getOrder, updateOrder} from "./OrderService.js";
 
 const OrderComponent = () => {
 
-    const {id} = useParams();
-    const [issueData, setIssueData] = useState('')
-    const [completionData, setCompletionData] = useState('')
-    const [observations, setObservations] = useState('')
-    const [analysis, setAnalysis] = useState('')
-    const [equipment, setEquipment] = useState('')
-    const [signatureResponsible, setSignatureResponsible] = useState('')
-    const [signatureMechanical, setSignatureMechanical] = useState('')
-    const navigator = useNavigate();
-    const [error, setErrors] = useState({
-        issueData: '',
-        completionData: '',
-        observations: '',
-        analysis: '',
-        equipment: '',
-        signatureResponsible: '',
-        signatureMechanical: '',
-    })
 
     useEffect(() => {
         if (id) {
