@@ -1,7 +1,6 @@
 import {useNavigate, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {createOrder, getOrder, updateOrder} from "./OrderService.js";
-import {createEquipment, updateEquipment} from "../equipment/EquipmentService.js";
 
 const OrderComponent = () => {
     const {id} = useParams();
@@ -147,6 +146,7 @@ const OrderComponent = () => {
                                        placeholder="Selecione a data do início do serviço"
                                        name="startServiceDate"
                                        value={startServiceDate}
+                                       className="form-control"
                                        onChange={(e) => setStartServiceDate(e.target.value)}/>
                             </div>
                             <div className="form-group mb-2">
@@ -155,6 +155,7 @@ const OrderComponent = () => {
                                        placeholder="Selecione a data da finalização do serviço"
                                        name="finishServiceDate"
                                        value={finishServiceDate}
+                                       className="form-control"
                                        onChange={(e) => setFinishServiceDate(e.target.value)}/>
                             </div>
                             <div className="form-group mb-2">
@@ -163,6 +164,7 @@ const OrderComponent = () => {
                                        placeholder="Digite o defeito do equipamento"
                                        name="defect"
                                        value={defect}
+                                       className="form-control"
                                        onChange={(e) => setDefect(e.target.value)}/>
                                 {errors.defect && <div className="invalid-feedback">{errors.defect}</div>}
                             </div>
@@ -172,6 +174,7 @@ const OrderComponent = () => {
                                        placeholder="Descreva a atividade realizada"
                                        name="activityPerformed"
                                        value={activityPerformed}
+                                       className="form-control"
                                        onChange={(e) => setActivityPerformed(e.target.value)}/>
                             </div>
                             <div className="form-group mb-2">
@@ -180,6 +183,7 @@ const OrderComponent = () => {
                                        placeholder="Selecione o usuário responsável pela manutenção"
                                        name="userResponsible"
                                        value={userResponsible}
+                                       className="form-control"
                                        onChange={(e) => setUserResponsible(e.target.value)}/>
                             </div>
 

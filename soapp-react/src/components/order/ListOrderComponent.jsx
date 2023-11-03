@@ -31,7 +31,7 @@ const ListOrderComponent = () => {
     function removeOrder(id) {
         console.log(id);
         deleteOrder(id)
-            .then((response) => {
+            .then(() => {
                 getAllOrders();
             })
             .catch((error) => {
@@ -47,46 +47,44 @@ const ListOrderComponent = () => {
             </button>
             <table className="table table-striped table-bordered">
                 <thead>
-                <tr>
-                    <th>Id:</th>
-                    <th>Data da Questão:</th>
-                    <th>Data de Conclusão:</th>
-                    <th>Observações:</th>
-                    <th>Análise:</th>
-                    <th>Equipamento:</th>
-                    <th>Assinatura do Responsável:</th>
-                    <th>Assinatura do Mecânico:</th>
-                    <th>Ações:</th>
-                </tr>
+                    <tr>
+                        <th>Id:</th>
+                        <th>Data de Emissão:</th>
+                        <th>Data de Conclusão:</th>
+                        <th>Defeito:</th>
+                        <th>Atividade Realizada:</th>
+                        <th>Operador:</th>
+                        <th>Operador Responsável:</th>
+                        <th>Ações:</th>
+                    </tr>
                 </thead>
                 <tbody>
-                {orders.map((order) => (
-                    <tr key={order.id}>
-                        <td>{order.id}</td>
-                        <td>{order.issueData}</td>
-                        <td>{order.completionData}</td>
-                        <td>{order.observations}</td>
-                        <td>{order.analysis}</td>
-                        <td>{order.equipment}</td>
-                        <td>{order.signatureResponsible}</td>
-                        <td>{order.signatureMechanical}</td>
-                        <td>
-                            <button
-                                className="btn btn-info"
-                                onClick={() => updateOrder(order.id)}
-                            >
-                                Atualizar
-                            </button>
-                            <button
-                                className="btn btn-danger"
-                                onClick={() => removeOrder(order.id)}
-                                style={{ marginLeft: '10px' }}
-                            >
-                                Deletar
-                            </button>
-                        </td>
-                    </tr>
-                ))}
+                    {orders.map((order) => (
+                        <tr key={order.id}>
+                            <td>{order.id}</td>
+                            <td>{order.issueDate}</td>
+                            <td>{order.finishServiceDate}</td>
+                            <td>{order.defect}</td>
+                            <td>{order.activityPerformed}</td>
+                            <td>{order.userOperator}</td>
+                            <td>{order.userResponsible}</td>
+                            <td>
+                                <button
+                                    className="btn btn-info"
+                                    onClick={() => updateOrder(order.id)}
+                                >
+                                    Atualizar
+                                </button>
+                                <button
+                                    className="btn btn-danger"
+                                    onClick={() => removeOrder(order.id)}
+                                    style={{ marginLeft: '10px' }}
+                                >
+                                    Deletar
+                                </button>
+                            </td>
+                        </tr>
+                    ))}
                 </tbody>
             </table>
         </div>
