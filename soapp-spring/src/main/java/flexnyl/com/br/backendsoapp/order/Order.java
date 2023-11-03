@@ -1,7 +1,4 @@
 package flexnyl.com.br.backendsoapp.order;
-
-import java.util.Calendar;
-import flexnyl.com.br.backendsoapp.equipment.Equipment;
 import flexnyl.com.br.backendsoapp.user.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -20,22 +17,20 @@ public class Order {
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	private long id;
-	private Calendar issueData;
-	private Calendar completionData;
-	private String observations;
-	private String analysis;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn (name = "user_id")
+	@JoinColumn (name = "user_operator")
 	@NotNull
-	private User user;
-	
+	private User userOperator;
+
+	private String issueDate;
+	private String startServiceDate;
+	private String finishServiceDate;
+	private String defect;
+	private String activityPerformed;
+
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn (name = "equipment_id")
+	@JoinColumn (name = "user_responsible")
 	@NotNull
-	private Equipment equipment;
-	
-	private String signatureResponsible;
-	private String signatureMechanical;
-	
+	private User userResponsible;
 }

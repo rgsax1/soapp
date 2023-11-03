@@ -35,22 +35,21 @@ public class OrderServiceImpl implements OrderService {
     			.collect(Collectors.toList());
     }
 
-    @Override
-    public OrderDTO updateOrder(long id, OrderDTO updatedOrder) {
-    	Order order = orderRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Order with id: "+ id + "not found"));
-    	order.setAnalysis(updatedOrder.getAnalysis());
-    	order.setCompletionData(updatedOrder.getCompletionData());
-    	order.setEquipment(updatedOrder.getEquipment());
-    	order.setIssueData(updatedOrder.getIssueData());
-    	order.setObservations(updatedOrder.getObservations());
-    	order.setSignatureMechanical(updatedOrder.getSignatureMechanical());
-    	order.setSignatureResponsible(updatedOrder.getSignatureResponsible());
-    	order.setUser(updatedOrder.getUser());
-    	
-    	Order updatedOrderObj = orderRepository.save(order);
-    	return OrderMapper.mapToOrderDTO(updatedOrderObj);
-  
-    }
+@Override
+public OrderDTO updateOrder(long id, OrderDTO updatedOrder) {
+    Order order = orderRepository.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException("Order with id: " + id + " not found"));
+    order.setUserOperator(updatedOrder.getUserOperator());
+    order.setIssueDate(updatedOrder.getIssueDate());
+    order.setStartServiceDate(updatedOrder.getStartServiceDate());
+    order.setFinishServiceDate(updatedOrder.getFinishServiceDate());
+    order.setDefect(updatedOrder.getDefect());
+    order.setActivityPerformed(updatedOrder.getActivityPerformed());
+    order.setUserResponsible(updatedOrder.getUserResponsible());
+    Order updatedOrderObj = orderRepository.save(order);
+    return OrderMapper.mapToOrderDTO(updatedOrderObj);
+}
+
 
     @Override
     public void deleteOrder(long id) {
