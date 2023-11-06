@@ -165,7 +165,7 @@ const MaintenanceComponent = () => {
 
     function pageTitle() {
         if (id) {
-            return <h2 className="text-center">Atualizar ficha de manutenção</h2>
+            return <><h2 className="text-center">Atualizar ficha de manutenção</h2><p className="text-center text-bg-warning">Atualize o número da revisão para editar</p></>
         } else {
             return <h2 className="text-center">Criar ficha de manutenção</h2>
         }

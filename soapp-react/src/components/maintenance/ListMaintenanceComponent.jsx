@@ -80,31 +80,38 @@ const ListMaintenanceComponent = () => {
         const user = users.find(user => user.id === userId);
         return user ? user.userName : "Usuário não encontrado";
     }
-
     function mapMaintenanceElectricalIdsToTypes(maintenanceElectricalIds, maintenanceElectricals) {
         if (Array.isArray(maintenanceElectricalIds)) {
             return maintenanceElectricalIds.map(id => {
                 const maintenanceElectrical = maintenanceElectricals.find(maintenance => maintenance.id === id);
-                return maintenanceElectrical ? maintenanceElectrical.type : "Manutenção elétrica não encontrada";
+                return maintenanceElectrical ? (
+                    <p key={id}>{maintenanceElectrical.type}</p>
+                ) : (
+                    <p key={id}>Manutenção elétrica não encontrada</p>
+                );
             });
         } else {
             return "IDs de manutenção elétrica inválidos";
         }
     }
-
+    
 
 
     function mapMaintenanceMechanicallIdsToTypes(maintenanceMechanicalIds, maintenanceMechanicals) {
         if (Array.isArray(maintenanceMechanicalIds)) {
             return maintenanceMechanicalIds.map(id => {
                 const maintenanceMechanical = maintenanceMechanicals.find(maintenance => maintenance.id === id);
-                return maintenanceMechanical ? maintenanceMechanical.type : "Manutenção mecânica não encontrada";
+                return maintenanceMechanical ? (
+                    <p key={id}>{maintenanceMechanical.type}</p>
+                ) : (
+                    <p key={id}>Manutenção mecânica não encontrada</p>
+                );
             });
         } else {
             return "IDs de manutenção mecânica inválidos";
         }
     }
-
+    
 
 
 
