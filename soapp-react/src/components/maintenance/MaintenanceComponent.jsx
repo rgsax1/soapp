@@ -33,7 +33,7 @@ const MaintenanceComponent = () => {
         try {
             const formattedDate = maintenanceEmissionDate.split('-').reverse().join('-');
             const parsedDate = parse(formattedDate, 'dd-MM-yyyy', new Date());
-            const iso8601Date = format(parsedDate, "yyyy-MM-dd'T'HH:mm:ss.SSSxxx");
+            const iso8601Date = format(parsedDate, "yyyy-MM-dd");
             return iso8601Date;
         } catch (error) {
             console.error('Erro ao converter a data: ', error);
