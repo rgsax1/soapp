@@ -35,11 +35,29 @@ public class MaintenanceController {
 		return ResponseEntity.ok(maintenanceDTO);
 	}
 	
-	@PutMapping("{id}")
-	public ResponseEntity<MaintenanceDTO> updatedMaintenance(@PathVariable("id") Long id, @RequestBody MaintenanceDTO updatedMaintenance ){
-		MaintenanceDTO maintenanceDTO = maintenanceService.updateMaintenance(id, updatedMaintenance);
-		return ResponseEntity.ok(maintenanceDTO);
+	@PutMapping("/{id}")
+	public ResponseEntity<MaintenanceDTO> atualizarManutencao(@PathVariable("id") Long id, @RequestBody MaintenanceDTO updatedMaintenance) {
+	    // Recupere a instância de Maintenance existente pelo ID
+	    MaintenanceDTO existingMaintenance = maintenanceService.getMaintenanceById(id);
+
+	    // Atualize as listas de identificadores
+	    List<Long> updatedMechanicalIds = updatedMaintenance.getMaintenanceMechanicalIds();
+	    List<Long> existingMechanicalIds = existingMaintenance.getMaintenanceMechanicalIds();
+	    existingMechanicalIds.clear(); // Limpe a lista existente
+	    existingMechanicalIds.addAll(updatedMechanicalIds); // Adicione os novos valores
+
+	    List<Long> updatedElectricalIds = updatedMaintenance.getMaintenanceElectricalIds();
+	    List<Long> existingElectricalIds = existingMaintenance.getMaintenanceElectricalIds();
+	    existingElectricalIds.clear(); // Limpe a lista existente
+	    existingElectricalIds.addAll(updatedElectricalIds); // Adicione os novos valores
+
+	    // Chame o serviço para atualizar a instância de Maintenance
+	    MaintenanceDTO maintenanceDTO = maintenanceService.updateMaintenance(id, existingMaintenance);
+
+	    return ResponseEntity.ok(maintenanceDTO);
 	}
+
+
 	
     @DeleteMapping("{id}")
     public ResponseEntity<String> deleteMaintenance(@PathVariable("id") Long id){

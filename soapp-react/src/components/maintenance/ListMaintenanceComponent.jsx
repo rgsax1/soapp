@@ -4,7 +4,7 @@ import { deleteMaintenance, listMaintenances } from "./MaintenanceService.js";
 import { listUsers } from "../user/UserService.js";
 import { listMaintenanceElectricals } from "../maintenance-electricals/MaintenanceElectricalService.js";
 import { listMaintenanceMechanicals } from "../maintenance-mechanicals/MaintenanceMechanicalService.js";
-import { format } from "date-fns";
+import { format, parseISO } from "date-fns";
 
 
 
@@ -49,10 +49,9 @@ const ListMaintenanceComponent = () => {
 
     function formatDate(isoDate) {
         if (!isoDate) return ''; // Verifique se a data não está vazia
-        const date = new Date(isoDate);
-        return format(date, 'dd/MM/yyyy');
+        const date = parseISO(isoDate, { timeZone: 'America/Sao_Paulo' }); // Configura o fuso horário para GMT-3 (Brasília)
+        return format(date, 'dd/MM/yyyy', { timeZone: 'America/Sao_Paulo' }); // Formata no fuso horário desejado
     }
-
     function addNewMaintenance() {
         navigator('/add-maintenance')
     }
