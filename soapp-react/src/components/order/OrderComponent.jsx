@@ -1,9 +1,10 @@
-import {useNavigate, useParams} from "react-router-dom";
-import {useEffect, useState} from "react";
-import {createOrder, getOrder, updateOrder} from "./OrderService.js";
+import { useNavigate, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { createOrder, getOrder, updateOrder } from "./OrderService.js";
+import { convertToISO8601 } from '../utils/dateUtils'
 
 const OrderComponent = () => {
-    const {id} = useParams();
+    const { id } = useParams();
     const [userOperator, setUserOperator] = useState('');
     const [issueDate, setIssueDate] = useState('');
     const [startServiceDate, setStartServiceDate] = useState('');
@@ -12,6 +13,8 @@ const OrderComponent = () => {
     const [activityPerformed, setActivityPerformed] = useState('');
     const [userResponsible, setUserResponsible] = useState('');
     const navigator = useNavigate();
+
+
     const [errors, setErrors] = useState({
         userOperator: '',
         issueDate: '',
@@ -21,6 +24,24 @@ const OrderComponent = () => {
         activityPerformed: '',
         userResponsible: '',
     })
+
+    const handleConvertAndSetIssueDate = (e) => {
+        const iso8601Date = convertToISO8601(e);
+        setIssueDate(iso8601Date);
+    };
+
+    const handleConvertAndSetStartServiceDate = (e) => {
+        const iso8601Date = convertToISO8601(e);
+        setStartServiceDate(iso8601Date);
+    };
+
+    const handleConvertAndSetFinishServiceDate = (e) => {
+        const iso8601Date = convertToISO8601(e);
+        setFinishServiceDate(iso8601Date);
+    };
+
+
+
 
 
     useEffect(() => {
@@ -75,7 +96,7 @@ const OrderComponent = () => {
 
     function validateForm() {
         let valid = true;
-        const errorsCopy = {...errors};
+        const errorsCopy = { ...errors };
 
         if (userOperator.trim()) {
             errorsCopy.userOperator = '';
@@ -123,68 +144,68 @@ const OrderComponent = () => {
                             <div className="form-group mb-2">
                                 <label className="form-label">Operador(a):</label>
                                 <input type="text"
-                                       placeholder="Digite o operador"
-                                       name="userOperator"
-                                       value={userOperator}
-                                       className={`form-control ${errors.userOperator ? 'is-invalid' : ''}`}
-                                       onChange={(e) => setUserOperator(e.target.value)}/>
+                                    placeholder="Digite o operador"
+                                    name="userOperator"
+                                    value={userOperator}
+                                    className={`form-control ${errors.userOperator ? 'is-invalid' : ''}`}
+                                    onChange={(e) => setUserOperator(e.target.value)} />
                                 {errors.userOperator && <div className="invalid-feedback">{errors.userOperator}</div>}
                             </div>
                             <div className="form-group mb-2">
                                 <label className="form-label">Data de emissão:</label>
                                 <input type="date"
-                                       placeholder="Selecione a data de emissão"
-                                       name="issueDate"
-                                       value={issueDate}
-                                       className={`form-control ${errors.issueDate ? 'is-invalid' : ''}`}
-                                       onChange={(e) => setIssueDate(e.target.value)}/>
+                                    placeholder="Selecione a data de emissão"
+                                    name="issueDate"
+                                    value={issueDate}
+                                    className={`form-control ${errors.issueDate ? 'is-invalid' : ''}`}
+                                    onChange={handleConvertAndSetIssueDate} />
                                 {errors.issueDate && <div className="invalid-feedback">{errors.issueDate}</div>}
                             </div>
                             <div className="form-group mb-2">
                                 <label className="form-label">Data de início do serviço:</label>
                                 <input type="date"
-                                       placeholder="Selecione a data do início do serviço"
-                                       name="startServiceDate"
-                                       value={startServiceDate}
-                                       className="form-control"
-                                       onChange={(e) => setStartServiceDate(e.target.value)}/>
+                                    placeholder="Selecione a data do início do serviço"
+                                    name="startServiceDate"
+                                    value={startServiceDate}
+                                    className="form-control"
+                                    onChange={handleConvertAndSetStartServiceDate}/>
                             </div>
                             <div className="form-group mb-2">
                                 <label className="form-label">Data de finalização do serviço:</label>
                                 <input type="date"
-                                       placeholder="Selecione a data da finalização do serviço"
-                                       name="finishServiceDate"
-                                       value={finishServiceDate}
-                                       className="form-control"
-                                       onChange={(e) => setFinishServiceDate(e.target.value)}/>
+                                    placeholder="Selecione a data da finalização do serviço"
+                                    name="finishServiceDate"
+                                    value={finishServiceDate}
+                                    className="form-control"
+                                    onChange={handleConvertAndSetFinishServiceDate} />
                             </div>
                             <div className="form-group mb-2">
                                 <label className="form-label">Digite o defeito:</label>
                                 <input type="text"
-                                       placeholder="Digite o defeito do equipamento"
-                                       name="defect"
-                                       value={defect}
-                                       className="form-control"
-                                       onChange={(e) => setDefect(e.target.value)}/>
+                                    placeholder="Digite o defeito do equipamento"
+                                    name="defect"
+                                    value={defect}
+                                    className="form-control"
+                                    onChange={(e) => setDefect(e.target.value)} />
                                 {errors.defect && <div className="invalid-feedback">{errors.defect}</div>}
                             </div>
                             <div className="form-group mb-2">
                                 <label className="form-label">Descreva a atividade realizada:</label>
                                 <input type="text"
-                                       placeholder="Descreva a atividade realizada"
-                                       name="activityPerformed"
-                                       value={activityPerformed}
-                                       className="form-control"
-                                       onChange={(e) => setActivityPerformed(e.target.value)}/>
+                                    placeholder="Descreva a atividade realizada"
+                                    name="activityPerformed"
+                                    value={activityPerformed}
+                                    className="form-control"
+                                    onChange={(e) => setActivityPerformed(e.target.value)} />
                             </div>
                             <div className="form-group mb-2">
                                 <label className="form-label">Selecione o usuário responsável:</label>
                                 <input type="text"
-                                       placeholder="Selecione o usuário responsável pela manutenção"
-                                       name="userResponsible"
-                                       value={userResponsible}
-                                       className="form-control"
-                                       onChange={(e) => setUserResponsible(e.target.value)}/>
+                                    placeholder="Selecione o usuário responsável pela manutenção"
+                                    name="userResponsible"
+                                    value={userResponsible}
+                                    className="form-control"
+                                    onChange={(e) => setUserResponsible(e.target.value)} />
                             </div>
 
                             <button className='btn btn-success mb-2' onClick={(e) => saveOrUpdateOrder(e)}>Enviar
