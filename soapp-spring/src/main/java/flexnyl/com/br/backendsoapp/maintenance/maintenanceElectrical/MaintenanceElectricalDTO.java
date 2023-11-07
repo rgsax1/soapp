@@ -1,4 +1,4 @@
-package flexnyl.com.br.backendsoapp.maintenanceMechanical;
+package flexnyl.com.br.backendsoapp.maintenance.maintenanceElectrical;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,8 +9,8 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class MaintenanceMechanicalDTO {
+public class MaintenanceElectricalDTO {
     private long id;
     private String type;
-
+	
 }

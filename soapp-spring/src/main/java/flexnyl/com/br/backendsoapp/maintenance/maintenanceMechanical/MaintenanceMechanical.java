@@ -1,4 +1,4 @@
-package flexnyl.com.br.backendsoapp.maintenanceMechanical;
+package flexnyl.com.br.backendsoapp.maintenance.maintenanceMechanical;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;

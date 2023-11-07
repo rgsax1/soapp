@@ -1,4 +1,4 @@
-package flexnyl.com.br.backendsoapp.maintenanceMechanical;
+package flexnyl.com.br.backendsoapp.maintenance.maintenanceMechanical;
 
 public class MaintenanceMechanicalMapper {
 

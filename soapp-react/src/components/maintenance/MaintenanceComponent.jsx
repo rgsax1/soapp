@@ -4,7 +4,8 @@ import { createMaintenance, getMaintenance, updateMaintenance } from "./Maintena
 import { listUsers } from "../user/UserService.js";
 import SelectMaintenanceElectrical from "./SelectMaintenanceElectrical.jsx";
 import SelectMaintenanceMechanical from "./SelectMaintenanceMechanical.jsx";
-import { format, parse, parseISO } from 'date-fns';
+import { format, parse } from 'date-fns';
+import { parseISO } from "date-fns-tz";
 
 const MaintenanceComponent = () => {
 
@@ -32,8 +33,8 @@ const MaintenanceComponent = () => {
     const convertToISO8601 = () => {
         try {
             const formattedDate = maintenanceEmissionDate.split('-').reverse().join('-');
-            const parsedDate = parse(formattedDate, 'dd-MM-yyyy', new Date());
-            const iso8601Date = format(parsedDate, "yyyy-MM-dd");
+            const parsedDate = parse(formattedDate, 'dd-MM-yyyy', new Date(), { timeZone: 'America/Sao_Paulo' });
+            const iso8601Date = format(parsedDate, "yyyy-MM-dd", { timeZone: 'America/Sao_Paulo' });
             return iso8601Date;
         } catch (error) {
             console.error('Erro ao converter a data: ', error);

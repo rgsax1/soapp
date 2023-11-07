@@ -1,4 +1,4 @@
-package flexnyl.com.br.backendsoapp.maintenanceElectrical;
+package flexnyl.com.br.backendsoapp.maintenance.maintenanceElectrical;
 
 
 import flexnyl.com.br.backendsoapp.exception.ResourceNotFoundException;
