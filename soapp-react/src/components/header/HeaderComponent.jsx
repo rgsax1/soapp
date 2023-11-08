@@ -12,28 +12,28 @@ const HeaderComponent = () => {
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                         <li className="nav-item">
-                            <NavLink className='nav-link' to='/login' exact activeClassName='active'>Login</NavLink>
+                            <NavLink className='nav-link' to='/login' activeclassname='active'>Login</NavLink>
                         </li>
                         <li className="nav-item">
-                            <NavLink className='nav-link' to='/users' activeClassName='active'>Usuários</NavLink>
+                            <NavLink className='nav-link' to='/users' activeclassname='active'>Usuários</NavLink>
                         </li>
                         <li className="nav-item">
-                            <NavLink className='nav-link' to='/equipments' activeClassName='active'>Equipamentos</NavLink>
+                            <NavLink className='nav-link' to='/equipments' activeclassname='active'>Equipamentos</NavLink>
                         </li>
                         <li className="nav-item">
-                            <NavLink className='nav-link' to='/equipment-generals' activeClassName='active'>Equipamentos Gerais</NavLink>
+                            <NavLink className='nav-link' to='/equipment-generals' activeclassname='active'>Equipamentos Gerais</NavLink>
                         </li>
                         <li className="nav-item">
-                            <NavLink className='nav-link' to='/maintenances' activeClassName='active'>Fichas de Manutenção</NavLink>
+                            <NavLink className='nav-link' to='/maintenances' activeclassname='active'>Fichas de Manutenção</NavLink>
                         </li>
                         <li className="nav-item">
-                            <NavLink className='nav-link' to='/maintenance-mechanicals' activeClassName='active'>Manutenções Mecânicas</NavLink>
+                            <NavLink className='nav-link' to='/maintenance-mechanicals' activeclassname='active'>Manutenções Mecânicas</NavLink>
                         </li>
                         <li className="nav-item">
-                            <NavLink className='nav-link' to='/maintenance-electricals' activeClassName='active'>Manutenções Elétricas</NavLink>
+                            <NavLink className='nav-link' to='/maintenance-electricals' activeclassname='active'>Manutenções Elétricas</NavLink>
                         </li>
                         <li className="nav-item">
-                            <NavLink className='nav-link' to='/orders' activeClassName='active'>Ordens de Serviço</NavLink>
+                            <NavLink className='nav-link' to='/orders' activeclassname='active'>Ordens de Serviço</NavLink>
                         </li>
                     </ul>
                 </div>

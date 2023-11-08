@@ -1,59 +1,47 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { getEquipmentGeneral, createEquipmentGeneral, updateEquipmentGeneral } from "./EquipmentGeneralService.js";
 
 const EquipmentGeneralComponent = () => {
     const { id } = useParams();
-    const [equipmentGeneralManufacturer, setEquipmentGeneralManufacturer] = useState('');
-    const [equipmentGeneralModel, setEquipmentGeneralModel] = useState('');
-    const [equipmentGeneralDescription, setEquipmentGeneralDescription] = useState('');
+    const [equipmentManufacturer, setEquipmentManufacturer] = useState('');
+    const [equipmentModel, setEquipmentModel] = useState('');
+    const [description, setDescription] = useState('');
     const navigator = useNavigate();
     const [errors, setErrors] = useState({
-        equipmentGeneralManufacturer: '',
-        equipmentGeneralModel: '',
-        equipmentGeneralDescription: ''
+        equipmentManufacturer: '',
+        equipmentModel: '',
+        description: ''
     });
 
     useEffect(() => {
         if (id) {
             getEquipmentGeneral(id)
                 .then((response) => {
-                    setEquipmentGeneralManufacturer(response.data.equipmentGeneralManufacturer);
-                    setEquipmentGeneralModel(response.data.equipmentGeneralModel);
-                    setEquipmentGeneralDescription(response.data.equipmentGeneralDescription);
+                    setEquipmentManufacturer(response.data.equipmentManufacturer);
+                    setEquipmentModel(response.data.equipmentModel);
+                    setDescription(response.data.description);
                 })
                 .catch((error) => {
                     console.error(error);
                 });
         }
-    }, [id]);
+    }, [id])
 
     function saveOrUpdateEquipmentGeneral(e) {
         e.preventDefault();
         if (validateForm()) {
-            const equipmentGeneral = {
-                equipmentGeneralManufacturer,
-                equipmentGeneralModel,
-                equipmentGeneralDescription
-            };
-            console.log(equipmentGeneral);
+            const equipmentGeneral = {equipmentManufacturer, equipmentModel, description};
+            console.log (equipmentGeneral)
             if (id) {
-                updateEquipmentGeneral(id, equipmentGeneral)
-                    .then((response) => {
+                updateEquipmentGeneral(id, equipmentGeneral).then((response) => {
                         console.log(response.data);
                         navigator('/equipment-generals');
-                    })
-                    .catch((error) => {
-                        console.error(error);
-                    });
-            } else {
-                createEquipmentGeneral(equipmentGeneral).then((response) => {
+                    }).catch((error) => {console.error(error);});
+            } else {createEquipmentGeneral(equipmentGeneral).then((response) => {
                     console.log(response.data);
-                    navigator('/equipment-generals');
-                })
-                    .catch((error) => {
-                        console.error(error);
-                    });
+                    navigator('/equipment-generals');})
+                    .catch((error) => {console.error(error);})
             }
         }
     }
@@ -62,24 +50,24 @@ const EquipmentGeneralComponent = () => {
         let valid = true;
         const errorsCopy = { ...errors };
 
-        if (equipmentGeneralManufacturer.trim()) {
-            errorsCopy.equipmentGeneralManufacturer = '';
+        if (equipmentManufacturer.trim()) {
+            errorsCopy.equipmentManufacturer = '';
         } else {
-            errorsCopy.equipmentGeneralManufacturer = 'Digite o fabricante do equipamento';
+            errorsCopy.equipmentManufacturer = 'Digite o fabricante do equipamento';
             valid = false;
         }
 
-        if (equipmentGeneralModel.trim()) {
-            errorsCopy.equipmentGeneralModel = '';
+        if (equipmentModel.trim()) {
+            errorsCopy.equipmentModel = '';
         } else {
-            errorsCopy.equipmentGeneralModel = 'Digite o modelo do equipamento';
+            errorsCopy.equipmentModel = 'Digite o modelo do equipamento';
             valid = false;
         }
 
-        if (equipmentGeneralDescription.trim()) {
-            errorsCopy.equipmentGeneralDescription = '';
+        if (description.trim()) {
+            errorsCopy.description = '';
         } else {
-            errorsCopy.equipmentGeneralDescription = 'Digite a descrição do equipamento';
+            errorsCopy.description = 'Digite a descrição do equipamento';
             valid = false;
         }
 
@@ -108,12 +96,12 @@ const EquipmentGeneralComponent = () => {
                                 <input
                                     type="text"
                                     placeholder="Digite o fabricante do equipamento"
-                                    name="equipmentGeneralManufacturer"
-                                    value={equipmentGeneralManufacturer}
-                                    className={`form-control ${errors.equipmentGeneralManufacturer ? 'is-invalid' : ''}`}
-                                    onChange={(e) => setEquipmentGeneralManufacturer(e.target.value)}
+                                    name="equipmentManufacturer"
+                                    value={equipmentManufacturer}
+                                    className={`form-control ${errors.equipmentManufacturer ? 'is-invalid' : ''}`}
+                                    onChange={(e) => setEquipmentManufacturer(e.target.value)}
                                 />
-                                {errors.equipmentGeneralManufacturer && <div className="invalid-feedback">{errors.equipmentGeneralManufacturer}</div>}
+                                {errors.equipmentManufacturer && <div className="invalid-feedback">{errors.equipmentManufacturer}</div>}
                             </div>
 
                             <div className="form-group mb-2">
@@ -121,12 +109,12 @@ const EquipmentGeneralComponent = () => {
                                 <input
                                     type="text"
                                     placeholder="Digite o modelo do equipamento"
-                                    name="equipmentGeneralModel"
-                                    value={equipmentGeneralModel}
-                                    className={`form-control ${errors.equipmentGeneralModel ? 'is-invalid' : ''}`}
-                                    onChange={(e) => setEquipmentGeneralModel(e.target.value)}
+                                    name="equipmentModel"
+                                    value={equipmentModel}
+                                    className={`form-control ${errors.equipmentModel ? 'is-invalid' : ''}`}
+                                    onChange={(e) => setEquipmentModel(e.target.value)}
                                 />
-                                {errors.equipmentGeneralModel && <div className="invalid-feedback">{errors.equipmentGeneralModel}</div>}
+                                {errors.equipmentModel && <div className="invalid-feedback">{errors.equipmentModel}</div>}
                             </div>
 
                             <div className="form-group mb-2">
@@ -134,11 +122,11 @@ const EquipmentGeneralComponent = () => {
                                 <input
                                     type="text"
                                     placeholder="Digite a descrição do equipamento"
-                                    name="equipmentGeneralDescription"
-                                    value={equipmentGeneralDescription}
-                                    className={`form-control ${errors.equipmentGeneralDescription ? 'is-invalid' : ''}`}
-                                    onChange={(e) => setEquipmentGeneralDescription(e.target.value)} />
-                                {errors.equipmentGeneralDescription && <div className="invalid-feedback">{errors.equipmentGeneralDescription}</div>}
+                                    name="description"
+                                    value={description}
+                                    className={`form-control ${errors.description ? 'is-invalid' : ''}`}
+                                    onChange={(e) => setDescription(e.target.value)} />
+                                {errors.description && <div className="invalid-feedback">{errors.description}</div>}
                             </div>
 
                             <button className="btn btn-success mb-2" onClick={(e) => saveOrUpdateEquipmentGeneral(e)}>
@@ -149,6 +137,6 @@ const EquipmentGeneralComponent = () => {
                 </div>
             </div>
         </div>
-    );
+    )
 }
 export default EquipmentGeneralComponent;

@@ -41,21 +41,16 @@ const UserComponent = () => {
         e.preventDefault();
         if (validateForm()) {
             const user = { userName, firstName, lastName, jobTitle, password, userAccessLevel }
-            console.log(user)
+            console.log (user)
             if (id) {
                 updateUser(id, user).then((response) => {
                     console.log(response.data);
                     navigator('/users');
-                }).catch(error => {
-                    console.error(error);
-                })
-            } else {
-                createUser(user).then((response) => {
+                }).catch(error => {console.error(error);})
+            } else {createUser(user).then((response) => {
                     console.log(response.data);
                     navigator('/users')
-                }).catch(error => {
-                    console.error(error);
-                })
+                }).catch(error => {console.error(error);})
             }
         }
     }
@@ -202,7 +197,7 @@ const UserComponent = () => {
                 </div>
             </div>
         </div>
-    );
-};
+    )
+}
 
 export default UserComponent;
