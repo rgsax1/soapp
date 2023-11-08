@@ -21,6 +21,9 @@ const HeaderComponent = () => {
                             <NavLink className='nav-link' to='/equipments' activeClassName='active'>Equipamentos</NavLink>
                         </li>
                         <li className="nav-item">
+                            <NavLink className='nav-link' to='/equipment-generals' activeClassName='active'>Equipamentos Gerais</NavLink>
+                        </li>
+                        <li className="nav-item">
                             <NavLink className='nav-link' to='/maintenances' activeClassName='active'>Fichas de Manutenção</NavLink>
                         </li>
                         <li className="nav-item">

@@ -6,6 +6,8 @@ import UserComponent from "./components/user/UserComponent.jsx"
 import FooterComponent from './components/footer/FooterComponent'
 import ListEquipmentComponent from "./components/equipment/ListEquipmentComponent.jsx";
 import EquipmentComponent from "./components/equipment/EquipmentComponent.jsx";
+import EquipmentGeneralComponent from './components/equipment/equipment-general/EquipmentGeneralComponent.jsx';
+import EquipmentGeneralListComponent from './components/equipment/equipment-general/EquipmentGeneralListComponent.jsx';
 import ListMaintenanceComponent from "./components/maintenance/ListMaintenanceComponent.jsx";
 import MaintenanceComponent from "./components/maintenance/MaintenanceComponent.jsx";
 import ListMaintenanceElectricalComponent from "./components/maintenance-electricals/ListMaintenanceElectricalComponent.jsx";
@@ -17,7 +19,6 @@ import ListOrderComponent from "./components/order/ListOrderComponent.jsx";
 import LoginComponent from "./components/login/LoginComponent.jsx";
 
 function App() {
-
 
     return (
         <>
@@ -32,6 +33,9 @@ function App() {
                     <Route path="/add-equipment" element={<EquipmentComponent/>}></Route>
                     <Route path="/edit-equipment/:id" element={<EquipmentComponent/>}></Route>
 
+                    <Route path="/equipment-generals" element={<EquipmentGeneralListComponent/>}></Route>
+                    <Route path="/add-equipment-general" element={<EquipmentGeneralComponent/>}></Route>
+                    <Route path="/edit-equipment-general/:id" element={<EquipmentGeneralComponent/>}></Route>
 
                     <Route path="/maintenances" element={<ListMaintenanceComponent/>}></Route>
                     <Route path="/add-maintenance" element={<MaintenanceComponent/>}></Route>
