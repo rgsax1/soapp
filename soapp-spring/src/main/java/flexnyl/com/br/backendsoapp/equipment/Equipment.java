@@ -20,7 +20,7 @@ public class Equipment {
 	private long id;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn (name = "equipment_general_id")
+	@JoinColumn (name = "equipment_general_info_id")
 	@NotNull
 	private EquipmentGeneral equipmentGeneral;
 
