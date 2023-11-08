@@ -1,21 +1,20 @@
 import React, {useEffect, useState} from 'react';
 import {useNavigate, useParams} from "react-router-dom";
 import {getEquipment, createEquipment, updateEquipment} from "./EquipmentService.js";
-
+import {listEquipmentGenerals} from "./equipment-general/EquipmentGeneralService.js";
 
 const EquipmentComponent = () => {
     const {id} = useParams();
-    const [equipmentManufacturer, setEquipmentManufacturer] = useState('');
-    const [equipmentModel, setEquipmentModel] = useState('');
-    const [description, setDescription] = useState('');
     const [installationDate, setInstallationDate] = useState('');
     const [equipmentSector, setEquipmentSector] = useState('');
     const [baptism, setBaptism] = useState('');
     const navigator = useNavigate();
+
+    const [equipmentGeneralId, setEquipmentGeneralId] = useState('')
+    const [equipmentGenerals, setEquipmentGenerals] = useState([])
+
     const [errors, setErrors] = useState({
-        equipmentManufacturer: '',
-        equipmentModel: '',
-        description: '',
+        equipmentGeneral: '',
         installationDate: '',
         equipmentSector: '',
         baptism: '',
@@ -39,13 +38,19 @@ const EquipmentComponent = () => {
         }
     }, [id]);
 
+    useEffect(() => {
+        listEquipmentGenerals().then((response) => {
+            setEquipmentGenerals(response.data);
+        }).catch(error => {
+            console.error(error);
+        })
+    }, [])
+
     function saveOrUpdateEquipment(e) {
         e.preventDefault();
         if (validateForm()) {
             const equipment = {
-                equipmentManufacturer,
-                equipmentModel,
-                description,
+                equipmentGeneralId,
                 installationDate,
                 equipmentSector,
                 baptism
@@ -77,27 +82,6 @@ const EquipmentComponent = () => {
         let valid = true;
         const errorsCopy = {...errors};
 
-        if (equipmentManufacturer.trim()) {
-            errorsCopy.equipmentManufacturer = '';
-        } else {
-            errorsCopy.equipmentManufacturer = 'Digite o fabricante do equipamento';
-            valid = false;
-        }
-
-        if (equipmentModel.trim()) {
-            errorsCopy.equipmentModel = 'Digite o modelo do equipamento';
-        } else {
-            errorsCopy.equipmentModel = '';
-            valid = false;
-        }
-
-        if (description.trim()) {
-            errorsCopy.description = '';
-        } else {
-            errorsCopy.description = 'Digite a descrição do equipamento';
-            valid = false;
-        }
-
         if (installationDate.trim()) {
             errorsCopy.installationDate = '';
         } else {
@@ -117,6 +101,13 @@ const EquipmentComponent = () => {
         } else {
             errorsCopy.baptism = 'Digite o batismo';
             valid = false;
+        }
+
+        if (equipmentGeneralId){
+            errorsCopy.equipmentGeneral = '';
+        } else {
+            errorsCopy.equipmentGeneral = 'Selecione um modelo de equipamento'
+            valid = false
         }
 
         setErrors(errorsCopy);
@@ -142,44 +133,21 @@ const EquipmentComponent = () => {
                         <form>
 
 
-                            <div className="form-group mb-2">
-                                <label className="form-label">Fabricante do equipamento:</label>
-                                <input
-                                    type="text"
-                                    placeholder="Digite o fabricante do equipamento"
-                                    name="equipmentManufacturer"
-                                    value={equipmentManufacturer}
-                                    className={`form-control ${errors.equipmentManufacturer ? 'is-invalid' : ''}`}
-                                    onChange={(e) => setEquipmentManufacturer(e.target.value)}
-                                />
-                                {errors.equipmentManufacturer &&
-                                    <div className="invalid-feedback">{errors.equipmentManufacturer}</div>}
-                            </div>
-
-                            <div className="form-group mb-2">
-                                <label className="form-label">Modelo do equipamento:</label>
-                                <input
-                                    type="text"
-                                    placeholder="Digite o modelo do equipamento"
-                                    name="equipmentModel"
-                                    value={equipmentModel}
-                                    className={`form-control ${errors.equipmentModel ? 'is-invalid' : ''}`}
-                                    onChange={(e) => setEquipmentModel(e.target.value)}
-                                />
-                                {errors.equipmentModel &&
-                                    <div className="invalid-feedback">{errors.equipmentModel}</div>}
-                            </div>
-
-                            <div className="form-group mb-2">
-                                <label className="form-label">Descrição do equipamento</label>
-                                <input
-                                    type="text"
-                                    placeholder="Digite a descrição do equipamento"
-                                    name="description"
-                                    value={description}
-                                    className={`form-control ${errors.description ? 'is-invalid' : ''}`}
-                                    onChange={(e) => setDescription(e.target.value)}/>
-                                {errors.description && <div className="invalid-feedback">{errors.description}</div>}
+                        <div className="form-group mb-2">
+                                <label className='form-label'>Selecione o modelo do equipamento:</label>
+                                <select
+                                    className={`form-control ${errors.equipmentGeneral ? 'is-invalid' : ''}`}
+                                    value={equipmentGeneralId}
+                                    onChange={(e) => setEquipmentGeneralId(e.target.value)}
+                                >
+                                    <option value="Selecione o modelo do equipamento">Selecione o modelo do equipamento</option>
+                                    {
+                                        equipmentGenerals.map(equipmentGeneral =>
+                                            <option key={equipmentGeneral.id} value={equipmentGeneral.id}>{equipmentGeneral.equipmentModel}</option>
+                                        )
+                                    }
+                                </select>
+                                {errors.user && <div className='invalid-feedback'>{errors.user}</div>}
                             </div>
 
                             <div className="form-group mb-2">
