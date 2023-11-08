@@ -1,6 +1,8 @@
 package flexnyl.com.br.backendsoapp.equipment;
 
+import flexnyl.com.br.backendsoapp.equipment.general.EquipmentGeneral;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,15 +18,11 @@ public class Equipment {
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	private long id;
-
-	@Column(name = "equipment_manufacturer")
-	private String equipmentManufacturer;
-
-	@Column(name = "equipment_model")
-	private String equipmentModel;
-
-	@Column(name = "description")
-	private String description;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn (name = "equipment_general_id")
+	@NotNull
+	private EquipmentGeneral equipmentGeneral;
 
 	@Column(name = "installation_date")
 	private String installationDate;

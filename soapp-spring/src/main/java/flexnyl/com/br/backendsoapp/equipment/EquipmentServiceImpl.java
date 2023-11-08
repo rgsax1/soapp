@@ -5,6 +5,8 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
+import flexnyl.com.br.backendsoapp.equipment.general.EquipmentGeneral;
+import flexnyl.com.br.backendsoapp.equipment.general.EquipmentGeneralRepository;
 import flexnyl.com.br.backendsoapp.exception.ResourceNotFoundException;
 import lombok.AllArgsConstructor;
 
@@ -12,15 +14,21 @@ import lombok.AllArgsConstructor;
 @Service
 @AllArgsConstructor
 public class EquipmentServiceImpl implements EquipmentService {
+	
+	private final EquipmentGeneralRepository equipmentGeneralRepository;
 
     private final EquipmentRepository equipmentRepository;
    
 
 	@Override
     public EquipmentDTO createEquipment(EquipmentDTO equipmentDTO) {
-        Equipment equipment = EquipmentMapper.mapToEquipment(equipmentDTO);
-        Equipment savedEquipment = equipmentRepository.save(equipment);
-        return EquipmentMapper.mapToEquipmentDTO(savedEquipment);
+		Equipment equipment = EquipmentMapper.mapToEquipment(equipmentDTO);
+		EquipmentGeneral equipmentGeneral = equipmentGeneralRepository.findById(equipmentDTO.getEquipmentGeneralId())
+				.orElseThrow(() -> new ResourceNotFoundException("General equipment with id: "+equipmentDTO.getEquipmentGeneralId() + "not found."));
+		equipment.setEquipmentGeneral(equipmentGeneral);
+		
+		Equipment savedEquipment = equipmentRepository.save(equipment);
+		return EquipmentMapper.mapToEquipmentDTO(savedEquipment);
     }
 
     @Override
@@ -42,9 +50,6 @@ public EquipmentDTO updateEquipment(long id, EquipmentDTO updatedEquipment) {
     Equipment equipment = equipmentRepository.findById(id).orElseThrow(
         () -> new ResourceNotFoundException("Equipment with id: " + id + " not found.")
     );
-    equipment.setEquipmentManufacturer(updatedEquipment.getEquipmentManufacturer());
-    equipment.setEquipmentModel(updatedEquipment.getEquipmentModel());
-    equipment.setDescription(updatedEquipment.getDescription());
     equipment.setInstallationDate(updatedEquipment.getInstallationDate());
     equipment.setEquipmentSector(updatedEquipment.getEquipmentSector());
     equipment.setBaptism(updatedEquipment.getBaptism());

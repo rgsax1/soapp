@@ -11,9 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class EquipmentDTO {
     private long id;
-    private String equipmentManufacturer;
-    private String equipmentModel;
-    private String description;
+	private long equipmentGeneralId;
     private String installationDate;
     private String equipmentSector;
     private String baptism;
