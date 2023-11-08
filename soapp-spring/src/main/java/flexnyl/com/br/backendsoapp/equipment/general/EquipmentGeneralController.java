@@ -29,19 +29,19 @@ public class EquipmentGeneralController {
     }
     
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<EquipmentGeneralDTO> getEquipmentGeneralById(@PathVariable("id") Long id) {
         EquipmentGeneralDTO equipmentGeneralDTO = equipmentGeneralService.getEquipmentGeneralById(id);
         return ResponseEntity.ok(equipmentGeneralDTO);
     }
 
-    @PutMapping("{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<EquipmentGeneralDTO> updateEquipmentGeneral(@PathVariable("id") Long id, @RequestBody EquipmentGeneralDTO updatedEquipmentGeneral) {
         EquipmentGeneralDTO equipmentGeneralDTO = equipmentGeneralService.updateEquipmentGeneral(id, updatedEquipmentGeneral);
         return ResponseEntity.ok(equipmentGeneralDTO);
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteEquipmentGeneral(@PathVariable("id") Long id) {
         equipmentGeneralService.deleteEquipmentGeneral(id);
         return ResponseEntity.ok("Equipment General deleted successfully!");
