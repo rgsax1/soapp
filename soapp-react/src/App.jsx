@@ -4,7 +4,7 @@ import {BrowserRouter, Route, Routes} from "react-router-dom"
 import ListUserComponent from "./components/user/ListUserComponent.jsx"
 import UserComponent from "./components/user/UserComponent.jsx"
 import FooterComponent from './components/footer/FooterComponent'
-import ListEquipmentComponent from "./components/equipment/ListEquipmentComponent.jsx";
+import EquipmentListComponent from "./components/equipment/EquipmentListComponent.jsx";
 import EquipmentComponent from "./components/equipment/EquipmentComponent.jsx";
 import EquipmentGeneralComponent from './components/equipment/equipment-general/EquipmentGeneralComponent.jsx';
 import EquipmentGeneralListComponent from './components/equipment/equipment-general/EquipmentGeneralListComponent.jsx';
@@ -29,7 +29,7 @@ function App() {
                     <Route path='/add-user' element={<UserComponent/>}></Route>
                     <Route path='/edit-user/:id' element={<UserComponent/>}></Route>
 
-                    <Route path="/equipments" element={<ListEquipmentComponent/>}></Route>
+                    <Route path="/equipments" element={<EquipmentListComponent/>}></Route>
                     <Route path="/add-equipment" element={<EquipmentComponent/>}></Route>
                     <Route path="/edit-equipment/:id" element={<EquipmentComponent/>}></Route>
 

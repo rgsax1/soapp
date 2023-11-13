@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { deleteEquipment, listEquipments, updateEquipment } from './EquipmentService.js';
 import { useNavigate } from 'react-router-dom';
+import { listEquipmentGenerals} from "./equipment-general/EquipmentGeneralService.js";
 
-const ListEquipmentComponents = () => {
+const EquipmentListComponent = () => {
     const [equipments, setEquipments] = useState([]);
+    const [equipmentGenerals, setEquipmentGenerals] = useState([]);
     const navigator = useNavigate();
 
     useEffect(() => {
@@ -51,11 +53,11 @@ const ListEquipmentComponents = () => {
                 <thead>
                     <tr>
                         <th>Id:</th>
-                        <th>Setor do Equipamento:</th>
-                        <th>Fabricante do Equipamento:</th>
-                        <th>Modelo do Equipamento:</th>
+                        <th>Fabricante do equipamento:</th>
+                        <th>Modelo do equipamento:</th>
                         <th>Descrição:</th>
                         <th>Data de Instalação:</th>
+                        <th>Setor do equipamento:</th>
                         <th>Batismo:</th>
                         <th>Ações:</th>
                     </tr>
@@ -65,9 +67,6 @@ const ListEquipmentComponents = () => {
                         <tr key={equipment.id}>
                             <td>{equipment.id}</td>
                             <td>{equipment.equipmentSector}</td>
-                            <td>{equipment.equipmentManufacturer}</td>
-                            <td>{equipment.equipmentModel}</td>
-                            <td>{equipment.description}</td>
                             <td>{equipment.installationDate}</td>
                             <td>{equipment.baptism}</td>
                             <td>
@@ -88,4 +87,4 @@ const ListEquipmentComponents = () => {
     );
 }
 
-export default ListEquipmentComponents;
+export default EquipmentListComponent;
