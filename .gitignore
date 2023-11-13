@@ -12,12 +12,29 @@ target/
 .settings
 .springBeans
 .sts4-cache
+.metadata
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.settings/
+.loadpath
+.recommenders
 
 ### IntelliJ IDEA ###
 .idea
 *.iws
 *.iml
 *.ipr
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
 
 ### NetBeans ###
 /nbproject/private/
@@ -29,46 +46,32 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
-### VS Code ###
-.vscode/
-
-### react ###
-.DS_*
-logs
-**/*.backup.*
-**/*.back.*
-
-node_modules
-bower_components
-
+#Sublime
 *.sublime*
-
 psd
 thumb
 sketch
 
-
-# Compiled output
+#Compiled output
 /dist
 /tmp
 /out-tsc
 /bazel-out
 
-# Node
+### React ###
+.DS_*
+logs
+**/*.backup.*
+**/*.back.*
+node_modules
+bower_components
+
+# Node #
 /node_modules
 npm-debug.log
 yarn-error.log
 
-# IDEs and editors
-.idea/
-.project
-.classpath
-.c9/
-*.launch
-.settings/
-*.sublime-workspace
-
-# Visual Studio Code
+# Visual Studio Code #
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
@@ -76,7 +79,7 @@ yarn-error.log
 !.vscode/extensions.json
 .history/*
 
-# Miscellaneous
+# Miscellaneous and Angular #
 /.angular/cache
 .sass-cache/
 /connect.lock
@@ -85,15 +88,6 @@ yarn-error.log
 testem.log
 /typings
 
-# System files
+# System files #
 .DS_Store
 Thumbs.db
-
-### Angular ###
-## Angular ##
-# compiled output
-dist/
-tmp/
-app/**/*.js
-app/**/*.js.map
-./angular/*
