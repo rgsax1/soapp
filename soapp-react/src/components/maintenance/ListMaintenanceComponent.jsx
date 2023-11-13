@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { deleteMaintenance, listMaintenances } from "./MaintenanceService.js";
 import { listUsers } from "../user/UserService.js";
-import { listMaintenanceElectricals } from "../maintenance-electricals/MaintenanceElectricalService.js";
-import { listMaintenanceMechanicals } from "../maintenance-mechanicals/MaintenanceMechanicalService.js";
+import { listMaintenanceElectricals } from "./maintenance-electricals/MaintenanceElectricalService.js";
+import { listMaintenanceMechanicals } from "./maintenance-mechanicals/MaintenanceMechanicalService.js";
 import { format, parseISO } from "date-fns";
 
 

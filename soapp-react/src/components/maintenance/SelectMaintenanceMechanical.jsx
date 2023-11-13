@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Select from 'react-select';
-import { listMaintenanceMechanicals } from "../maintenance-mechanicals/MaintenanceMechanicalService.js";
+import { listMaintenanceMechanicals } from "./maintenance-mechanicals/MaintenanceMechanicalService.js";
 
 function SelectMaintenanceMechanical({ value, onChange }) {
     const [maintenanceOptions, setMaintenanceOptions] = useState([]);

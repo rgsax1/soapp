@@ -10,10 +10,10 @@ import EquipmentGeneralComponent from './components/equipment/equipment-general/
 import EquipmentGeneralListComponent from './components/equipment/equipment-general/EquipmentGeneralListComponent.jsx';
 import ListMaintenanceComponent from "./components/maintenance/ListMaintenanceComponent.jsx";
 import MaintenanceComponent from "./components/maintenance/MaintenanceComponent.jsx";
-import ListMaintenanceElectricalComponent from "./components/maintenance-electricals/ListMaintenanceElectricalComponent.jsx";
-import MaintenanceElectricalComponent from "./components/maintenance-electricals/MaintenanceElectricalComponent.jsx";
-import ListMaintenanceMechanicalComponent from "./components/maintenance-mechanicals/ListMaintenanceMechanicalComponent.jsx";
-import MaintenanceMechanicalComponent from "./components/maintenance-mechanicals/MaintenanceMechanicalComponent.jsx";
+import ListMaintenanceElectricalComponent from "./components/maintenance/maintenance-electricals/ListMaintenanceElectricalComponent.jsx";
+import MaintenanceElectricalComponent from "./components/maintenance/maintenance-electricals/MaintenanceElectricalComponent.jsx";
+import ListMaintenanceMechanicalComponent from "./components/maintenance/maintenance-mechanicals/ListMaintenanceMechanicalComponent.jsx";
+import MaintenanceMechanicalComponent from "./components/maintenance/maintenance-mechanicals/MaintenanceMechanicalComponent.jsx";
 import OrderComponent from "./components/order/OrderComponent.jsx";
 import ListOrderComponent from "./components/order/ListOrderComponent.jsx";
 import LoginComponent from "./components/login/LoginComponent.jsx";
