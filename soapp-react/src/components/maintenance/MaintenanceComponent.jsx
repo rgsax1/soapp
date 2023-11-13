@@ -1,10 +1,10 @@
-import { useNavigate, useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { createMaintenance, getMaintenance, updateMaintenance } from "./MaintenanceService.js";
-import { listUsers } from "../user/UserService.js";
+import {useNavigate, useParams} from "react-router-dom";
+import {useEffect, useState} from "react";
+import {createMaintenance, getMaintenance, updateMaintenance} from "./MaintenanceService.js";
+import {listUsers} from "../user/UserService.js";
 import SelectMaintenanceElectrical from "./SelectMaintenanceElectrical.jsx";
 import SelectMaintenanceMechanical from "./SelectMaintenanceMechanical.jsx";
-import { format, parse } from 'date-fns';
+import {format, parse, parseISO} from 'date-fns';
 
 const MaintenanceComponent = () => {
 
@@ -33,8 +33,7 @@ const MaintenanceComponent = () => {
         try {
             const formattedDate = maintenanceEmissionDate.split('-').reverse().join('-');
             const parsedDate = parse(formattedDate, 'dd-MM-yyyy', new Date(), { timeZone: 'America/Sao_Paulo' });
-            const iso8601Date = format(parsedDate, "yyyy-MM-dd", { timeZone: 'America/Sao_Paulo' });
-            return iso8601Date;
+            return format(parsedDate, "yyyy-MM-dd", {timeZone: 'America/Sao_Paulo'});
         } catch (error) {
             console.error('Erro ao converter a data: ', error);
             return null;
