@@ -25,9 +25,6 @@ const EquipmentComponent = () => {
         if (id) {
             getEquipment(id)
                 .then((response) => {
-                    setEquipmentManufacturer(response.data.equipmentManufacturer);
-                    setEquipmentModel(response.data.equipmentModel);
-                    setDescription(response.data.description);
                     setInstallationDate(response.data.installationDate);
                     setEquipmentSector(response.data.equipmentSector);
                     setBaptism(response.data.baptism);
