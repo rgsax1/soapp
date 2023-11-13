@@ -88,3 +88,12 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+### Angular ###
+## Angular ##
+# compiled output
+dist/
+tmp/
+app/**/*.js
+app/**/*.js.map
+./angular/*
