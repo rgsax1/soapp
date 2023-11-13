@@ -1,20 +1,28 @@
-import { parse, format } from 'date-fns';
+// dateUtils.js
 
-const convertToISO8601 = (event) => {
+import { format, parse } from 'date-fns';
+
+export const convertToISO8601 = (dateString, formatPattern) => {
   try {
-    const formattedDate = event.target.value;
-    const parsedDate = new Date(formattedDate);
-    if (isNaN(parsedDate)) {
-      // Trate datas inválidas aqui, por exemplo, retorne um valor padrão ou uma mensagem de erro.
-    }
-    const iso8601Date = parsedDate.toISOString();
-    return iso8601Date;
+    const parsedDate = parse(dateString, formatPattern, new Date(), {
+      timeZone: 'America/Sao_Paulo',
+    });
+    return format(parsedDate, 'yyyy-MM-dd', { timeZone: 'America/Sao_Paulo' });
   } catch (error) {
     console.error('Erro ao converter a data: ', error);
     return null;
   }
 };
 
+export const isValidISO8601Date = (dateString) => {
+  // Verifique se a data corresponde ao formato AAAA-MM-DD
+  const isoDateRegex = /^\d{4}-\d{2}-\d{2}$/;
 
+  if (!isoDateRegex.test(dateString)) {
+    return false;
+  }
 
-export { convertToISO8601 };
+  // Agora, você pode tentar criar uma data com a string e verificar se ela é válida
+  const parsedDate = new Date(dateString);
+  return !isNaN(parsedDate.getTime());
+};

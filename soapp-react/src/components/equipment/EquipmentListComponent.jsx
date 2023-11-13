@@ -48,9 +48,9 @@ const EquipmentListComponent = () => {
         navigator('/add-equipment');
     }
 
-    function updateEquipment(id) {
-        navigator(`/edit-equipment/${id}`);
-    }
+      function updateEquipment(id) {
+    navigator(`/edit-equipment/${id}`);
+  }
 
     function removeEquipment(id) {
         console.log(id);
