@@ -100,7 +100,7 @@ const EquipmentComponent = () => {
             valid = false;
         }
 
-        if (equipmentGeneralId){
+        if (equipmentGeneralId) {
             errorsCopy.equipmentGeneral = '';
         } else {
             errorsCopy.equipmentGeneral = 'Selecione um modelo de equipamento'
@@ -128,24 +128,20 @@ const EquipmentComponent = () => {
                     {pageTitle()}
                     <div className="card-body">
                         <form>
-
-
-                        <div className="form-group mb-2">
+                            <div className="form-group mb-2">
                                 <label className='form-label'>Selecione o modelo do equipamento:</label>
-                                <select
-                                    className={`form-control ${errors.equipmentGeneral ? 'is-invalid' : ''}`}
-                                    value={equipmentGeneralId}
-                                    onChange={(e) => setEquipmentGeneralId(e.target.value)}
-                                >
-                                    <option value="Selecione o modelo do equipamento">Selecione o modelo do equipamento</option>
-                                    {
-                                        equipmentGenerals.map(equipmentGeneral =>
-                                            <option key={equipmentGeneral.id} value={equipmentGeneral.id}>{equipmentGeneral.equipmentModel}</option>
-                                        )
+                                <select className={`form-control ${errors.equipmentGeneral ? 'is-invalid' : ''}`}
+                                        value={equipmentGeneralId} onChange={(e) => setEquipmentGeneralId(e.target.value)}>
+                                    <option value="Selecione o modelo do equipamento">Selecione o modelo do equipamento</option> {
+                                        equipmentGenerals.map
+                                        (equipmentGeneral => <option key={equipmentGeneral.id} value={equipmentGeneral.id}>{equipmentGeneral.equipmentModel}</option>)
                                     }
                                 </select>
-                                {errors.user && <div className='invalid-feedback'>{errors.user}</div>}
+                                {errors.equipmentGeneral && <div className='invalid-feedback'>{errors.equipmentGeneral}</div>}
                             </div>
+
+                            //crie as divs de equipment equipmentManufacturer: '',
+                            // description: '' aqui
 
                             <div className="form-group mb-2">
                                 <label className="form-label">Data de instalação</label>
@@ -155,8 +151,7 @@ const EquipmentComponent = () => {
                                        value={installationDate}
                                        className={`form-control ${errors.installationDate ? 'is-invalid' : ''}`}
                                        onChange={(e) => setInstallationDate(e.target.value)}/>
-                                {errors.installationDate &&
-                                    <div className="invalid-feedback">{errors.installationDate}</div>}
+                                {errors.installationDate && <div className="invalid-feedback">{errors.installationDate}</div>}
                             </div>
 
                             <div className="form-group mb-2">
@@ -167,8 +162,7 @@ const EquipmentComponent = () => {
                                        value={equipmentSector}
                                        className={`form-control ${errors.equipmentSector ? 'is-invalid' : ''}`}
                                        onChange={(e) => setEquipmentSector(e.target.value)}/>
-                                {errors.equipmentSector &&
-                                    <div className="invalid-feedback">{errors.equipmentSector}</div>}
+                                {errors.equipmentSector && <div className="invalid-feedback">{errors.equipmentSector}</div>}
                             </div>
 
                             <div className="form-group mb-2">
