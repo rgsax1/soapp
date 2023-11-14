@@ -4,11 +4,11 @@ import {createMaintenance, getMaintenance, updateMaintenance} from "./Maintenanc
 import {listUsers} from "../user/UserService.js";
 import SelectMaintenanceElectrical from "./SelectMaintenanceElectrical.jsx";
 import SelectMaintenanceMechanical from "./SelectMaintenanceMechanical.jsx";
-import {format, parse, parseISO} from 'date-fns';
+import {format, parseISO} from 'date-fns';
 
 const MaintenanceComponent = () => {
 
-    const { id } = useParams();
+    const {id} = useParams();
     const [maintenanceRecord, setMaintenanceRecord] = useState('')
     const [maintenanceReview, setMaintenanceReview] = useState(0)
     const [maintenanceEmissionDate, setMaintenanceEmissionDate] = useState('')
@@ -17,7 +17,7 @@ const MaintenanceComponent = () => {
     const [maintenanceElectricalIds, setMaintenanceElectricalIds] = useState([])
     const [maintenanceMechanicalIds, setMaintenanceMechanicalIds] = useState([])
     const review = parseInt(maintenanceReview);
-
+    const navigator = useNavigate();
     const [errors, setErrors] = useState({
         maintenanceRecord: '',
         maintenanceReview: '',
@@ -27,32 +27,15 @@ const MaintenanceComponent = () => {
         maintenanceMechanicalIds: ''
     })
 
-    const navigator = useNavigate();
-
     const convertToISO8601 = () => {
         try {
-            const formattedDate = maintenanceEmissionDate.split('-').reverse().join('-');
-            const parsedDate = parse(formattedDate, 'dd-MM-yyyy', new Date(), { timeZone: 'America/Sao_Paulo' });
-            return format(parsedDate, "yyyy-MM-dd", {timeZone: 'America/Sao_Paulo'});
+            const parsedDate = new Date(maintenanceEmissionDate);
+            return parsedDate.toJSON();
         } catch (error) {
             console.error('Erro ao converter a data: ', error);
             return null;
         }
     };
-
-    
-    function isValidISO8601Date(dateString) {
-        // Verifique se a data corresponde ao formato AAAA-MM-DD
-        const isoDateRegex = /^\d{4}-\d{2}-\d{2}$/;
-
-        if (!isoDateRegex.test(dateString)) {
-            return false;
-        }
-
-        // Agora, você pode tentar criar uma data com a string e verificar se ela é válida
-        const parsedDate = new Date(dateString);
-        return !isNaN(parsedDate.getTime());
-    }
 
 
     useEffect(() => {
@@ -84,26 +67,18 @@ const MaintenanceComponent = () => {
     }, [id]);
 
 
-
     function saveOrUpdateMaintenance(e) {
         e.preventDefault();
-        const iso8601Date = convertToISO8601();
-
-        if (!iso8601Date) {
-            console.error('Data inválida');
-            return;
-        }
-
         if (validateForm()) {
             const maintenance =
-            {
-                maintenanceRecord,
-                maintenanceReview: review,
-                maintenanceEmissionDate: iso8601Date,
-                userId,
-                maintenanceElectricalIds,
-                maintenanceMechanicalIds,
-            };
+                {
+                    maintenanceRecord,
+                    maintenanceReview: review,
+                    maintenanceEmissionDate,
+                    userId,
+                    maintenanceElectricalIds,
+                    maintenanceMechanicalIds,
+                };
             console.log(maintenance)
             if (id) {
                 updateMaintenance(id, maintenance)
@@ -129,7 +104,7 @@ const MaintenanceComponent = () => {
 
     function validateForm() {
         let valid = true;
-        const errorsCopy = { ...errors };
+        const errorsCopy = {...errors};
 
         if (maintenanceRecord.trim()) {
             errorsCopy.maintenanceReview = '';
@@ -145,12 +120,6 @@ const MaintenanceComponent = () => {
             valid = false;
         }
 
-        if (isValidISO8601Date(maintenanceEmissionDate)) {
-            errorsCopy.maintenanceEmissionDate = '';
-        } else {
-            errorsCopy.maintenanceEmissionDate = 'Digite uma data válida no formato DD-MM-AAAA';
-            valid = false;
-        }
 
         if (userId) {
             errorsCopy.user = '';
@@ -166,7 +135,8 @@ const MaintenanceComponent = () => {
 
     function pageTitle() {
         if (id) {
-            return <><h2 className="text-center">Atualizar ficha de manutenção</h2><p className="text-center text-bg-warning">Atualize o número da revisão para editar</p></>
+            return <><h2 className="text-center">Atualizar ficha de manutenção</h2><p
+                className="text-center text-bg-warning">Atualize o número da revisão para editar</p></>
         } else {
             return <h2 className="text-center">Criar ficha de manutenção</h2>
         }
@@ -190,8 +160,7 @@ const MaintenanceComponent = () => {
                                     className={`form-control ${errors.maintenanceRecord ? 'is-invalid' : ''}`}
                                     onChange={(e) => setMaintenanceRecord(e.target.value)}
                                 >
-                                </input>
-                                {errors.maintenanceRecord && <div className='invalid-feedback'>{errors.maintenanceRecord}</div>}
+                                </input>{errors.maintenanceRecord &&<div className='invalid-feedback'>{errors.maintenanceRecord}</div>}
                             </div>
 
                             <div className="form-group mb-2">
@@ -207,9 +176,7 @@ const MaintenanceComponent = () => {
                                         const value = e.target.value;
                                         // Remove caracteres não numéricos e o sinal negativo
                                         e.target.value = value.replace(/[^0-9]/g, '');
-                                        setMaintenanceReview(e.target.value);
-                                    }}
-                                >
+                                        setMaintenanceReview(e.target.value);}}>
                                 </input>
                                 {errors.maintenanceReview && <div className='invalid-feedback'>{errors.maintenanceReview}</div>}
                             </div>
@@ -223,11 +190,8 @@ const MaintenanceComponent = () => {
                                     value={maintenanceEmissionDate}
                                     className={`form-control ${errors.maintenanceEmissionDate ? 'is-invalid' : ''}`}
                                     onChange={(e) => setMaintenanceEmissionDate(e.target.value)}
-                                />
-                                {errors.maintenanceEmissionDate && <div className='invalid-feedback'>{errors.maintenanceEmissionDate}</div>}
+                                /> {errors.maintenanceEmissionDate &&<div className='invalid-feedback'>{errors.maintenanceEmissionDate}</div>}
                             </div>
-
-
 
 
                             <div className="form-group mb-2">
@@ -236,8 +200,7 @@ const MaintenanceComponent = () => {
                                     className={`form-control ${errors.user ? 'is-invalid' : ''}`}
                                     value={userId}
                                     onChange={(e) => setUserId(e.target.value)}
-                                >
-                                    <option value="Selecione o usuário">Selecione o usuário</option>
+                                ><option value="Selecione o usuário">Selecione o usuário</option>
                                     {
                                         users.map(user =>
                                             <option key={user.id} value={user.id}>{user.userName}</option>
@@ -251,20 +214,16 @@ const MaintenanceComponent = () => {
                                 <label className='form-label'>Selecione as manutenções elétricas:</label>
                                 <SelectMaintenanceElectrical
                                     value={maintenanceElectricalIds}
-                                    onChange={(value) => setMaintenanceElectricalIds(value)}
-                                />
+                                    onChange={(value) => setMaintenanceElectricalIds(value)}/>
                             </div>
 
                             <div className="form-group mb-2">
                                 <label className='form-label'>Selecione as manutenções mecânicas:</label>
                                 <SelectMaintenanceMechanical
                                     value={maintenanceMechanicalIds}
-                                    onChange={(value) => setMaintenanceMechanicalIds(value)}
-                                />
+                                    onChange={(value) => setMaintenanceMechanicalIds(value)}/>
                             </div>
-
                             <button className="btn btn-success mb-2" onClick={saveOrUpdateMaintenance}>Enviar</button>
-
                         </form>
                     </div>
                 </div>
